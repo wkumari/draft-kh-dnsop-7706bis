@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 <!ENTITY rfc1035 PUBLIC "" "reference.RFC.1035.xml">
-<!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
+<!ENTITY rfc2119 PUBLIC "" "reference.RFC.2119.xml">
 <!ENTITY rfc4033 PUBLIC "" "reference.RFC.4033.xml">
-<!ENTITY rfc8198 PUBLIC "" "reference.RFC.8198.xml">
 ]>
-<!-- WK: Set category, IPR, docName -->
-<rfc category="info" docName="draft-kh-dnsop-7706bis" ipr="trust200902" updates="7706">
-  <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
+<rfc number="7706" category="info" submissionType="IETF" consensus="yes"
+     ipr="trust200902">
   <?rfc toc="yes" ?>
-
   <?rfc symrefs="yes" ?>
-
   <?rfc sortrefs="yes"?>
-
-  <?rfc iprnotified="no" ?>
-
-  <?rfc strict="yes"?>
-
   <?rfc compact="yes" ?>
 
   <front>
@@ -41,7 +32,7 @@
       </address>
     </author>
 
-    <date year="2018"/>
+    <date month="November" year="2015"/>
 
     <abstract>
       <t>Some DNS recursive resolvers have longer-than-desired round-trip
@@ -53,15 +44,6 @@
       how to start and maintain such a copy of the root zone that does not
       pose a threat to other users of the DNS, at the cost of adding some
       operational fragility for the operator.</t>
-      
-      <t>This draft will update RFC 7706. The purposes of this draft are to give
-      more background about why a resolver operator would want to run with
-      no connection to the DNS root server system, and to clarify the idea of running
-      a slave to the root servers instead of running an independent root server.</t>
-
-      <t>[ Ed note: Text inside square brackets ([]) is additional background information, answers to freqently asked questions, general musings, etc.  They will be removed before publication.]</t>
-
-      <t>[ This document is being collaborated on in Github at: https://github.com/wkumari/draft-kh-dnsop-7706bis. The most recent version of the document, open issues, etc should all be available here. The authors (gratefully) accept pull requests ]</t>
     </abstract>
   </front>
 
@@ -114,7 +96,9 @@
       resolution system might fail in ways that are hard to diagnose.</t>
 
       <t>This design requires the addition of authoritative name server
-      software running on the same machine as the recursive resolver. Thus,
+      software running on the same machine as the recursive resolver. 
+
+Thus,
       recursive resolver software such as BIND will not need to add much new
       functionality, but recursive resolver software such as Unbound will need
       to be able to talk to an authoritative server (such as NSD) running on
@@ -126,16 +110,7 @@
       that should be considered without reading the entire document.</t>
 
       <t>A different approach to solving the problems discussed in this document
-      is described in <xref target="RFC8198"/>.</t>
-
-      <section title="Updates from RFC 7706">
-        <t>[ This section will list all the changes from RFC 7706. ]</t>
-
-        <t>[ Will talk about BIND and slaving the root zone instead of running on localhost. ]</t>
-
-        <t>[ Other topics will go here. ]</t>
-
-      </section>
+      is described in <xref target="AggressiveNSEC"/>.</t>
 
       <section title="Requirements Notation">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
@@ -267,16 +242,27 @@
     </references>
 
     <references title="Informative References">
-      <?rfc include='reference.RFC.8198'?>
-
       <reference anchor="Manning2013"
                  target="http://www.sfc.wide.ad.jp/dissertation/bill_e.html">
         <front>
           <title>Client Based Naming</title>
+
           <author fullname="William Manning" initials="W." surname="Manning"/>
+
           <date year="2013"/>
         </front>
       </reference>
+
+<!-- draft-fujiwara-dnsop-nsec-aggressiveuse-02: I-D Exists -->
+<reference anchor="AggressiveNSEC">
+<front>
+<title>Aggressive use of NSEC/NSEC3</title>
+<author initials="K." surname="Fujiwara" fullname="Kazunori Fujiwara"/>
+<author initials="A." surname="Kato" fullname="Akira Kato"/>
+<date month="October" year="2015"/>
+</front>
+<seriesInfo name="Work in Progress," value="draft-fujiwara-dnsop-nsec-aggressiveuse-02"/>
+</reference>
 
     </references>
 
