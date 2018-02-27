@@ -131,6 +131,8 @@
       <section title="Updates from RFC 7706">
         <t>[ This section will list all the changes from RFC 7706. ]</t>
 
+        <t>[ Will talk about increasing ability to DDoS the root servers, making them unavailable. ]</t>
+
         <t>[ Will talk about BIND and slaving the root zone instead of running on localhost. ]</t>
 
         <t>[ Other topics will go here. ]</t>
