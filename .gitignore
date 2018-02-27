@@ -1,6 +1,6 @@
 # 
 #
-# Time-stamp: " "
+# Time-stamp: "2018-02-27 13:21:48 wkumari"
 # Copyright: Warren Kumari (warren@kumari.net) -- 2014
 #
 
@@ -11,6 +11,3 @@
 # and the text and HTML versions of the drafts.
 *.txt
 *.html
-
-# and the Makefile
-Makefile
