@@ -58,7 +58,7 @@ default:
 .PHONY: latest txt html pdf submit diff clean update ghpages
 
 latest: txt html
-txt: $(draft).txt
+txt: $(draft).txt README.md
 html: $(draft).html
 pdf: $(draft).pdf
 
@@ -110,6 +110,11 @@ tag:
 
 %.txt: %.xml
 	$(xml2rfc) $< -o $@ --text
+	@echo "Making README.md and committing and pushing to github. Run 'make tag' to add and push a tag."
+	@echo '**Important:** Read CONTRIBUTING.md before submitting feedback or contributing' > README.md
+	@echo \`\`\` >> README.md
+	@cat $(draft).txt >> README.md
+	@echo \`\`\` >> README.md
 
 %.html: %.xml
 	$(xml2rfc) $< -o $@ --html
