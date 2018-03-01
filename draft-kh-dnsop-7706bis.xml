@@ -54,10 +54,8 @@
       pose a threat to other users of the DNS, at the cost of adding some
       operational fragility for the operator.</t>
       
-      <t>This draft will update RFC 7706. The purposes of this draft are to give
-      more background about why a resolver operator would want to run with
-      no connection to the DNS root server system, and to clarify the idea of running
-      a slave to the root servers instead of running an independent root server.</t>
+      <t>This draft will update RFC 7706. See Section 1.1 for a list of
+      topics that will be added in the update.</t>
 
       <t>[ Ed note: Text inside square brackets ([]) is additional background information, answers to freqently asked questions, general musings, etc.  They will be removed before publication.]</t>
 
@@ -129,13 +127,29 @@
       is described in <xref target="RFC8198"/>.</t>
 
       <section title="Updates from RFC 7706">
-        <t>[ This section will list all the changes from RFC 7706. ]</t>
+        <t>[ This section will list all the changes from RFC 7706. For this -00 draft, it is
+        the list of changes that we will make in future versions of the daft. ]</t>
 
-        <t>[ Will talk about increasing ability to DDoS the root servers, making them unavailable. ]</t>
+        <t>[ Give a clearer comparison of software that allows slaving the root zone in
+        the software (such as BIND) versus resolver software that requires a local slaved
+        root zone (Unbound). ]</t>
+        
+        <t>[ Add examples of other resolvers such as Knot Resolver and PowerDNS Recusor, and
+        maybe Windows Server. ]</t>
 
-        <t>[ Will talk about BIND and slaving the root zone instead of running on localhost. ]</t>
+        <t>[ Add discussion of BIND slaving the root zone in the same view instead of using different
+        views. ]</t>
+        
+        <t>[ Make the use cases explicit. Be clearer that a real use case is folks who are worried
+        that root server unavailabilty due to DDoS against them is a reason some people would use
+        the mechanisms here. ]</t>
+        
+        <t>[ Describe how slaving the root zone from root zone servers does not actually remove
+        the reliance on the root servers being available. ]</t>
+        
+        <t>[ Refresh list of where one can get copies of the root zone. ]</t>
 
-        <t>[ Other topics will go here. ]</t>
+        <t>[ Other new topics might go here. ]</t>
 
       </section>
 

@@ -8,7 +8,7 @@ Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Updates: 7706 (if approved)                                   P. Hoffman
 Intended status: Informational                                     ICANN
-Expires: August 31, 2018                               February 27, 2018
+Expires: September 2, 2018                                 March 1, 2018
 
 
    Decreasing Access Time to Root Servers by Running One on Loopback
@@ -26,11 +26,8 @@ Abstract
    zone that does not pose a threat to other users of the DNS, at the
    cost of adding some operational fragility for the operator.
 
-   This draft will update RFC 7706.  The purposes of this draft are to
-   give more background about why a resolver operator would want to run
-   with no connection to the DNS root server system, and to clarify the
-   idea of running a slave to the root servers instead of running an
-   independent root server.
+   This draft will update RFC 7706.  See Section 1.1 for a list of
+   topics that will be added in the update.
 
    [ Ed note: Text inside square brackets ([]) is additional background
    information, answers to freqently asked questions, general musings,
@@ -49,23 +46,21 @@ Status of This Memo
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
-   Drafts is at http://datatracker.ietf.org/drafts/current/.
-
-
-
-
-
-Kumari & Hoffman         Expires August 31, 2018                [Page 1]
-
-Internet-Draft          Running Root on Loopback           February 2018
-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
 
    Internet-Drafts are draft documents valid for a maximum of six months
    and may be updated, replaced, or obsoleted by other documents at any
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 31, 2018.
+
+
+Kumari & Hoffman        Expires September 2, 2018               [Page 1]
+
+Internet-Draft          Running Root on Loopback              March 2018
+
+
+   This Internet-Draft will expire on September 2, 2018.
 
 Copyright Notice
 
@@ -74,7 +69,7 @@ Copyright Notice
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents
-   (http://trustee.ietf.org/license-info) in effect on the date of
+   (https://trustee.ietf.org/license-info) in effect on the date of
    publication of this document.  Please review these documents
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
@@ -91,8 +86,8 @@ Table of Contents
    3.  Operation of the Root Zone on the Loopback Address  . . . . .   5
    4.  Using the Root Zone Server on the Loopback Address  . . . . .   6
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   6
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   6
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   6
+   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
+     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
      6.2.  Informative References  . . . . . . . . . . . . . . . . .   7
    Appendix A.  Current Sources of the Root Zone . . . . . . . . . .   7
    Appendix B.  Example Configurations of Common Implementations . .   8
@@ -108,18 +103,19 @@ Table of Contents
    their customers, even those for domain names that do not exist.  For
    each queried name that has a top-level domain (TLD) that is not in
    the recursive resolver's cache, the resolver must send a query to a
-
-
-
-Kumari & Hoffman         Expires August 31, 2018                [Page 2]
-
-Internet-Draft          Running Root on Loopback           February 2018
-
-
    root server to get the information for that TLD, or to find out that
    the TLD does not exist.  Typically, the vast majority of queries
    going to the root are for names that do not exist in the root zone,
    and the negative answers are cached for a much shorter period of
+
+
+
+
+Kumari & Hoffman        Expires September 2, 2018               [Page 2]
+
+Internet-Draft          Running Root on Loopback              March 2018
+
+
    time.  A slow path between the recursive resolver and the closest
    root server has a negative effect on the resolver's customers.
 
@@ -164,16 +160,17 @@ Internet-Draft          Running Root on Loopback           February 2018
    software running on the same machine as the recursive resolver.
    Thus, recursive resolver software such as BIND will not need to add
    much new functionality, but recursive resolver software such as
-
-
-
-Kumari & Hoffman         Expires August 31, 2018                [Page 3]
-
-Internet-Draft          Running Root on Loopback           February 2018
-
-
    Unbound will need to be able to talk to an authoritative server (such
    as NSD) running on the same host.
+
+
+
+
+
+Kumari & Hoffman        Expires September 2, 2018               [Page 3]
+
+Internet-Draft          Running Root on Loopback              March 2018
+
 
    Because of the significant operational risks described in this
    document, distributions of recursive DNS servers MUST NOT include
@@ -187,15 +184,30 @@ Internet-Draft          Running Root on Loopback           February 2018
 
 1.1.  Updates from RFC 7706
 
-   [ This section will list all the changes from RFC 7706. ]
+   [ This section will list all the changes from RFC 7706.  For this -00
+   draft, it is the list of changes that we will make in future versions
+   of the daft. ]
 
-   [ Will talk about increasing ability to DDoS the root servers, making
-   them unavailable. ]
+   [ Give a clearer comparison of software that allows slaving the root
+   zone in the software (such as BIND) versus resolver software that
+   requires a local slaved root zone (Unbound). ]
 
-   [ Will talk about BIND and slaving the root zone instead of running
-   on localhost. ]
+   [ Add examples of other resolvers such as Knot Resolver and PowerDNS
+   Recusor, and maybe Windows Server. ]
 
-   [ Other topics will go here. ]
+   [ Add discussion of BIND slaving the root zone in the same view
+   instead of using different views. ]
+
+   [ Make the use cases explicit.  Be clearer that a real use case is
+   folks who are worried that root server unavailabilty due to DDoS
+   against them is a reason some people would use the mechanisms here. ]
+
+   [ Describe how slaving the root zone from root zone servers does not
+   actually remove the reliance on the root servers being available. ]
+
+   [ Refresh list of where one can get copies of the root zone. ]
+
+   [ Other new topics might go here. ]
 
 1.2.  Requirements Notation
 
@@ -209,6 +221,13 @@ Internet-Draft          Running Root on Loopback           February 2018
 
    o  The system MUST be able to validate a zone with DNSSEC [RFC4033].
 
+
+
+Kumari & Hoffman        Expires September 2, 2018               [Page 4]
+
+Internet-Draft          Running Root on Loopback              March 2018
+
+
    o  The system MUST have an up-to-date copy of the DNS root key.
 
    o  The system MUST be able to retrieve a copy of the entire root zone
@@ -220,14 +239,6 @@ Internet-Draft          Running Root on Loopback           February 2018
 
    A corollary of the above list is that authoritative data in the root
    zone used on the local authoritative server MUST be identical to the
-
-
-
-Kumari & Hoffman         Expires August 31, 2018                [Page 4]
-
-Internet-Draft          Running Root on Loopback           February 2018
-
-
    same data in the root zone for the DNS.  It is possible to change the
    unsigned data (the glue records) in the copy of the root zone, but
    such changes could cause problems for the recursive server that
@@ -265,6 +276,14 @@ Internet-Draft          Running Root on Loopback           February 2018
    the refreshing of the local root zone is broken during that time, the
    recursive resolver will have bad data for the entire TLD zone.
 
+
+
+
+Kumari & Hoffman        Expires September 2, 2018               [Page 5]
+
+Internet-Draft          Running Root on Loopback              March 2018
+
+
    An administrator using the procedure in this document SHOULD have an
    automated method to check that the contents of the local root zone
    are being refreshed.  One way to do this is to have a separate
@@ -275,15 +294,6 @@ Internet-Draft          Running Root on Loopback           February 2018
    and the SOA is changed every day even if the contents of the root
    zone are unchanged.  For example, the SOA of the root zone on January
    2, 2015 was 2015010201.  A process can use this fact to create a
-
-
-
-
-Kumari & Hoffman         Expires August 31, 2018                [Page 5]
-
-Internet-Draft          Running Root on Loopback           February 2018
-
-
    check for the contents of the local root zone (using a program not
    specified in this document).
 
@@ -319,6 +329,17 @@ Internet-Draft          Running Root on Loopback           February 2018
    limiting damage to any other system that might try to rely on an
    altered copy of the root.
 
+
+
+
+
+
+
+Kumari & Hoffman        Expires September 2, 2018               [Page 6]
+
+Internet-Draft          Running Root on Loopback              March 2018
+
+
 6.  References
 
 6.1.  Normative References
@@ -328,22 +349,14 @@ Internet-Draft          Running Root on Loopback           February 2018
               November 1987, <https://www.rfc-editor.org/info/rfc1035>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
-              Requirement Levels", BCP 14, RFC 2119, DOI 10.17487/
-              RFC2119, March 1997, <https://www.rfc-editor.org/info/
-              rfc2119>.
-
-
-
-
-Kumari & Hoffman         Expires August 31, 2018                [Page 6]
-
-Internet-Draft          Running Root on Loopback           February 2018
-
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/info/rfc2119>.
 
    [RFC4033]  Arends, R., Austein, R., Larson, M., Massey, D., and S.
-              Rose, "DNS Security Introduction and Requirements", RFC
-              4033, DOI 10.17487/RFC4033, March 2005, <https://www.rfc-
-              editor.org/info/rfc4033>.
+              Rose, "DNS Security Introduction and Requirements",
+              RFC 4033, DOI 10.17487/RFC4033, March 2005,
+              <https://www.rfc-editor.org/info/rfc4033>.
 
 6.2.  Informative References
 
@@ -375,6 +388,14 @@ Appendix A.  Current Sources of the Root Zone
 
    o  k.root-servers.net
 
+
+
+
+Kumari & Hoffman        Expires September 2, 2018               [Page 7]
+
+Internet-Draft          Running Root on Loopback              March 2018
+
+
    It is crucial to note that none of the above services are guaranteed
    to be available.  It is possible that ICANN or some of the root
    server operators will turn off the AXFR capability on the servers
@@ -387,14 +408,6 @@ Appendix A.  Current Sources of the Root Zone
    contents of the zone cannot be refreshed before the expire time, the
    server MUST return a SERVFAIL error response for all queries until
    the zone can be successfully be set up again.
-
-
-
-
-Kumari & Hoffman         Expires August 31, 2018                [Page 7]
-
-Internet-Draft          Running Root on Loopback           February 2018
-
 
 Appendix B.  Example Configurations of Common Implementations
 
@@ -431,6 +444,14 @@ B.1.  Example Configuration: BIND 9.9
       accessed by the recursive server.  When using the same view, this
       validation does not occur for the slaved zone.
 
+
+
+
+Kumari & Hoffman        Expires September 2, 2018               [Page 8]
+
+Internet-Draft          Running Root on Loopback              March 2018
+
+
    Caching:  When using separate views or instances, the recursive
       server will cache all of the queries for the slaved zone, just as
       it would using the traditional "root hints" method.  Thus, as the
@@ -440,17 +461,6 @@ B.1.  Example Configuration: BIND 9.9
       and delegation NS records is two days.  When using the same view,
       all zone data in the recursive server will be updated as soon as
       it receives its copy of the zone.
-
-
-
-
-
-
-
-Kumari & Hoffman         Expires August 31, 2018                [Page 8]
-
-Internet-Draft          Running Root on Loopback           February 2018
-
 
    view root {
        match-destinations { 127.12.12.12; };
@@ -490,6 +500,14 @@ B.2.  Example Configuration: Unbound 1.4 and NSD 4
    Unbound and NSD are separate software packages.  Because of this,
    there is no "fate-sharing" between the two servers in the following
    configurations.  That is, if the root server instance (NSD) dies, the
+
+
+
+Kumari & Hoffman        Expires September 2, 2018               [Page 9]
+
+Internet-Draft          Running Root on Loopback              March 2018
+
+
    recursive resolver instance (Unbound) will probably keep running but
    will not be able to resolve any queries for the root zone.
    Therefore, the administrator of this configuration might want to
@@ -498,15 +516,6 @@ B.2.  Example Configuration: Unbound 1.4 and NSD 4
 
    Using this configuration, queries for information in the root zone
    are returned with the AA bit not set.
-
-
-
-
-
-Kumari & Hoffman         Expires August 31, 2018                [Page 9]
-
-Internet-Draft          Running Root on Loopback           February 2018
-
 
    # Configuration for Unbound
    server:
@@ -546,6 +555,15 @@ B.3.  Example Configuration: Microsoft Windows Server 2012
    The steps to configure DNS Manager to implement the requirements in
    this document are:
 
+
+
+
+
+Kumari & Hoffman        Expires September 2, 2018              [Page 10]
+
+Internet-Draft          Running Root on Loopback              March 2018
+
+
    1.  Launch the DNS Manager GUI.  This can be done from the command
        line ("dnsmgmt.msc") or from the Service Manager (the "DNS"
        command in the "Tools" menu).
@@ -555,14 +573,6 @@ B.3.  Example Configuration: Microsoft Windows Server 2012
        "New Zone".  This brings up a succession of dialog boxes.
 
    3.  In the "Zone Type" dialog box, select "Secondary zone".
-
-
-
-
-Kumari & Hoffman         Expires August 31, 2018               [Page 10]
-
-Internet-Draft          Running Root on Loopback           February 2018
-
 
    4.  In the "Zone Name" dialog box, enter ".".
 
@@ -599,6 +609,17 @@ Acknowledgements
 
 Authors' Addresses
 
+
+
+
+
+
+
+Kumari & Hoffman        Expires September 2, 2018              [Page 11]
+
+Internet-Draft          Running Root on Loopback              March 2018
+
+
    Warren Kumari
    Google
 
@@ -615,5 +636,40 @@ Authors' Addresses
 
 
 
-Kumari & Hoffman         Expires August 31, 2018               [Page 11]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Kumari & Hoffman        Expires September 2, 2018              [Page 12]
 ```
