@@ -23,8 +23,8 @@
   <?rfc compact="yes" ?>
 
   <front>
-    <title abbrev="Running Root on Loopback">Decreasing Access Time to Root
-    Servers by Running One on Loopback</title>
+    <title abbrev="Running Root on Local">Decreasing Access Time to Root
+    Servers by Running One On The Same Server</title>
 
     <author fullname="Warren Kumari" initials="W." surname="Kumari">
       <organization>Google</organization>
@@ -50,7 +50,7 @@
       operators want to prevent snooping of requests sent to DNS root servers
       by third parties. Such resolvers can greatly decrease the round-trip
       time and prevent observation of requests by running a copy of the full
-      root zone on a loopback address (such as 127.0.0.1). This document shows
+      root zone on the same server, such as on a loopback address. This document shows
       how to start and maintain such a copy of the root zone that does not
       pose a threat to other users of the DNS, at the cost of adding some
       operational fragility for the operator.</t>
@@ -90,11 +90,11 @@
 
       <t>This document describes a method for the operator of a recursive
       resolver to greatly speed these queries and to hide them from outsiders.
-      The basic idea is to create an up-to-date root zone server on a loopback
-      address on the same host as the recursive server, and use that server
+      The basic idea is to create an up-to-date root zone server on
+      the same host as the recursive server, and use that server
       when the recursive resolver looks up root information. The recursive
-      resolver validates all responses from the root server on the loopback
-      address, just as it would all responses from a remote root server.</t>
+      resolver validates all responses from the root server on the same host,
+      just as it would all responses from a remote root server.</t>
 
       <t>The primary goals of this design are to provide faster negative
       responses to stub resolver queries that contain junk queries, and to
@@ -106,9 +106,10 @@
       non-goal of this design.</t>
 
       <t>This design explicitly only allows the new root zone server to be run
-      on a loopback address, in order to prevent the server from serving
-      authoritative answers to any system other than the recursive
-      resolver.</t>
+      on the same server as the recursive resolver, in order to prevent the server from serving
+      authoritative answers to any other system. Specifically, the root server
+      on the local system MUST be configured to only answer queries from the
+      server, and MUST NOT answer queries from any other server.</t>
 
       <t>It is important to note that the design being described here is not
       considered a "best practice". In fact, many people feel that it is an
@@ -136,8 +137,16 @@
       document is described in <xref target="RFC8198"/>.</t>
 
       <section title="Updates from RFC 7706">
+        <t>RFC 7706 explicitly required that the root server instance be run
+        on the loopback interface of the host running the validating resolver.
+        However, RFC 7706 also had examples of how to set up common software
+        that did not use the loopback interface. Thus, this document
+        loosens the restriction on the interface but keeps the requirement
+        that only systems running on that single host be able to query that
+        root server instance.</t>
+
         <t>[ This section will list all the changes from RFC 7706. For this
-        -00 draft, it is the list of changes that we will make in future
+        draft, it is also the list of changes that we will make in future
         versions of the daft. ]</t>
 
         <t>[ Give a clearer comparison of software that allows slaving the
@@ -162,6 +171,7 @@
         <t>[ Refresh list of where one can get copies of the root zone. ]</t>
 
         <t>[ Other new topics might go here. ]</t>
+        
       </section>
 
       <section title="Requirements Notation">
@@ -184,7 +194,11 @@
           <t>The system MUST be able to retrieve a copy of the entire root
           zone (including all DNSSEC-related records).</t>
 
-          <t>The system MUST be able to run an authoritative server on one of
+          <t>The system MUST be able to run an authoritative server for the root zone
+          on the same host. The root server instance MUST only respond to queries
+          from the same host. One way to assure not responding to queries
+          from other hosts is to make the address of the authoritative
+          server one of
           the IPv4 loopback addresses (that is, an address in the range 127/8
           for IPv4 or ::1 in IPv6).</t>
         </list></t>
@@ -199,7 +213,7 @@
     </section>
 
     <section anchor="zoneop"
-             title="Operation of the Root Zone on the Loopback Address">
+             title="Operation of the Root Zone on the Local Server">
       <t>The operation of an authoritative server for the root in the system
       described here can be done separately from the operation of the
       recursive resolver.</t>
@@ -210,10 +224,14 @@
           <t>Retrieve a copy of the root zone. (See <xref target="sources"/>
           for some current locations of sources.)</t>
 
-          <t>Start the authoritative server with the root zone on a loopback
-          address that is not in use. For IPv4, this would typically be
+          <t>Start the authoritative server with the root zone on an
+          address on the host that is not in use. For IPv4, this could be
           127.0.0.1, but if that address is in use, any address in 127/8 is
-          acceptable. For IPv6, this would be ::1.</t>
+          acceptable. For IPv6, this would be ::1. It can also be a publicly-visible
+          address on the host, but only if the authoritative server software allows
+          restricting the addresses that can access the authoritative server,
+          and the software is configured to only allow access from addresses
+          on this single host.</t>
         </list></t>
 
       <t>The contents of the root zone MUST be refreshed using the timers from
@@ -244,7 +262,7 @@
       local root zone (using a program not specified in this document).</t>
     </section>
 
-    <section title="Using the Root Zone Server on the Loopback Address">
+    <section title="Using the Root Zone Server on the Same Host">
       <t>A recursive resolver that wants to use a root zone server operating
       as described in <xref target="zoneop"/> simply specifies the local
       address as the place to look when it is looking for information from the
@@ -271,7 +289,8 @@
       benefits and costs of deploying DNSSEC <xref target="RFC4033"/>.</t>
 
       <t>As stated in <xref target="intro"/>, this design explicitly only
-      allows the new root zone server to be run on a loopback address, in
+      allows the new root zone server to be run on the same host,
+      answering queries only from resolvers on that host, in
       order to prevent the server from serving authoritative answers to any
       system other than the recursive resolver. This has the security property
       of limiting damage to any other system that might try to rely on an
@@ -349,7 +368,7 @@
 
       <t>The examples here use a loopback address of 127.12.12.12, but typical
       installations will use 127.0.0.1. The different address is used in order
-      to emphasize that the root server does not need to be on the device at
+      to emphasize that the root server does not need to be on the device at the name
       "localhost".</t>
 
       <section title="Example Configuration: BIND 9.9">
@@ -516,7 +535,7 @@ zone:
       significant contributors include Wouter Wijngaards, Tony Hain, Doug
       Barton, Greg Lindsay, and Akira Kato. The authors also received many
       offline comments about making the document clear that this is just a
-      description of a way to operate a root zone on localhost, and not a
+      description of a way to operate a root zone on the same host, and not a
       recommendation to do so.</t>
     </section>
   </back>
