@@ -214,7 +214,8 @@
              title="Operation of the Root Zone on the Local Server">
       <t>The operation of an authoritative server for the root in the system
       described here can be done separately from the operation of the
-      recursive resolver.</t>
+      recursive resolver, or it might be part of the configuration of
+      the recursive resolver system.</t>
 
       <t>The steps to set up the root zone are:</t>
 
