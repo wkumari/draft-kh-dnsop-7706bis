@@ -143,6 +143,10 @@
         that only systems running on that single host be able to query that
         root server instance.</t>
 
+        <t>Added the idea that a recursive resolver using this design might
+        switch to using the normal (remote) root servers if the local root
+        server fails.</t>
+        
         <t>[ This section will list all the changes from RFC 7706. For this
         draft, it is also the list of changes that we will make in future
         versions of the daft. ]</t>
@@ -238,9 +242,16 @@
       target="RFC1035"/>. This inherently means that the contents of the local
       root zone will likely be a little behind those of the global root
       servers because those servers are updated when triggered by NOTIFY
-      messages. If the contents of the zone cannot be refreshed before the
-      expire time, the server MUST return a SERVFAIL error response for all
-      queries until the zone can be successfully be set up again.</t>
+      messages.</t>
+      
+      <t>If the contents of the root zone cannot be refreshed before the
+      expire time in the SOA, the local root server MUST return a SERVFAIL
+      error response for all queries sent to it until the zone can be
+      successfully be set up again. Because this would cause a recursive
+      resolver on the same host that is relying on this root server to also
+      fail, a resolver might be configured to immediatly switch to using other
+      (non-local) root servers if the resolver receives a SERVFAIL response
+      from a local root server.</t>
 
       <t>In the event that refreshing the contents of the root zone fails, the
       results can be disastrous. For example, sometimes all the NS records for
@@ -250,13 +261,14 @@
 
       <t>An administrator using the procedure in this document SHOULD have an
       automated method to check that the contents of the local root zone are
-      being refreshed. One way to do this is to have a separate process that
+      being refreshed; this might be part of the resolver software.
+      One way to do this is to have a separate process that
       periodically checks the SOA of the root zone from the local root zone
       and makes sure that it is changing. At the time that this document is
       published, the SOA for the root zone is the digital representation of
       the current date with a two-digit counter appended, and the SOA is
       changed every day even if the contents of the root zone are unchanged.
-      For example, the SOA of the root zone on January 2, 2015 was 2015010201.
+      For example, the SOA of the root zone on January 2, 2018 was 2018010201.
       A process can use this fact to create a check for the contents of the
       local root zone (using a program not specified in this document).</t>
     </section>
@@ -265,11 +277,16 @@
       <t>A recursive resolver that wants to use a root zone server operating
       as described in <xref target="zoneop"/> simply specifies the local
       address as the place to look when it is looking for information from the
-      root. All responses from the root server must be validated using
+      root. All responses from the root server MUST be validated using
       DNSSEC.</t>
 
-      <t>Note that using this configuration will cause the recursive resolver
-      to fail if the local root zone server fails. See <xref
+      <t>Note that using this simplistic configuration will cause the recursive resolver
+      to fail if the local root zone server fails. A more robust configuration
+      would cause the resolver to start using the normal remote root servers
+      when the local root server fails (such as if it does not respond
+      or gives SERVFAIL responses).</t>
+      
+      <t>See <xref
       target="examples"/> for more discussion of this for specific
       software.</t>
 
