@@ -187,7 +187,8 @@
           <t>The system MUST be able to validate a zone with DNSSEC <xref
           target="RFC4033"/>.</t>
 
-          <t>The system MUST have an up-to-date copy of the DNS root key.</t>
+          <t>The system MUST have an up-to-date copy of the key used to sign the
+          DNS root.</t>
 
           <t>The system MUST be able to retrieve a copy of the entire root
           zone (including all DNSSEC-related records).</t>
