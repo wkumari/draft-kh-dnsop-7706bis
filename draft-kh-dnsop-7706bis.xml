@@ -64,8 +64,8 @@
 
       <t>[ This document is being collaborated on in Github at:
       https://github.com/wkumari/draft-kh-dnsop-7706bis. The most recent
-      version of the document, open issues, etc should all be available here.
-      The authors (gratefully) accept pull requests ]</t>
+      version of the document, open issues, and so on should all be available there.
+      The authors gratefully accept pull requests. ]</t>
     </abstract>
   </front>
 
@@ -76,17 +76,16 @@
       queried name that has a top-level domain (TLD) that is not in the
       recursive resolver's cache, the resolver must send a query to a root
       server to get the information for that TLD, or to find out that the TLD
-      does not exist. Typically, the vast majority of queries going to the
-      root are for names that do not exist in the root zone, and the negative
+      does not exist. Research shows that the vast majority of queries going to the
+      root are for names that do not exist in the root zone, partially because the negative
       answers are cached for a much shorter period of time. A slow path
       between the recursive resolver and the closest root server has a
       negative effect on the resolver's customers.</t>
 
-      <t>Recursive resolvers currently send queries for all TLDs that are not
-      in their caches to root servers, even though most of those queries get
+      <t>Many of the queries from recursive resolvers to root servers get
       answers that are referrals to other servers. Malicious third parties
       might be able to observe that traffic on the network between the
-      recursive resolver and one or more of the DNS roots.</t>
+      recursive resolver and root servers.</t>
 
       <t>This document describes a method for the operator of a recursive
       resolver to greatly speed these queries and to hide them from outsiders.
@@ -97,22 +96,21 @@
       just as it would all responses from a remote root server.</t>
 
       <t>The primary goals of this design are to provide faster negative
-      responses to stub resolver queries that contain junk queries, and to
+      responses to stub resolver queries that contain queries that result in NXDOMAIN responses, and to
       prevent queries and responses from being visible on the network. This
       design will probably have little effect on getting faster positive
-      responses to stub resolver for good queries on TLDs, because the data
-      for those zones is usually long-lived and already in the cache of the
-      recursive resolver; thus, getting faster positive responses is a
-      non-goal of this design.</t>
+      responses to stub resolver for good queries on TLDs, because the TTL for most TLDs
+      is usually long-lived (on the order of a day or two) and is thus usually already in the cache of the
+      recursive resolver.</t>
 
       <t>This design explicitly only allows the new root zone server to be run
       on the same server as the recursive resolver, in order to prevent the server from serving
       authoritative answers to any other system. Specifically, the root server
       on the local system MUST be configured to only answer queries from the
-      server, and MUST NOT answer queries from any other server.</t>
+      resolvers on the same host, and MUST NOT answer queries from any other resolver.</t>
 
-      <t>It is important to note that the design being described here is not
-      considered a "best practice". In fact, many people feel that it is an
+      <t>It is important to note that the design described in this document is controversial.
+      There is not consensus on whether this is a "best practice". In fact, many people feel that it is an
       excessively risky practice because it introduces a new operational piece
       to local DNS operations where there was not one before. The advantages
       listed above do not come free: if this new system does not work
