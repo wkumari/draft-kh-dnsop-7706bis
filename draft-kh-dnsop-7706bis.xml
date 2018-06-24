@@ -124,14 +124,8 @@
       recursive resolver software such as BIND will not need to add much new
       functionality, but recursive resolver software such as Unbound will need
       to be able to talk to an authoritative server (such as NSD) running on
-      the same host.</t>
-
-      <t>Because of the significant operational risks described in this
-      document, distributions of recursive DNS servers MUST NOT include
-      configuration for the design described here. It is acceptable to point
-      to this document, but not to indicate that this configuration is
-      something that should be considered without reading the entire
-      document.</t>
+      the same host. However, more recursive resolver software might
+      add the capabilities described in this document in th future.</t>
 
       <t>A different approach to solving the problems discussed in this
       document is described in <xref target="RFC8198"/>.</t>
@@ -144,6 +138,10 @@
         loosens the restriction on the interface but keeps the requirement
         that only systems running on that single host be able to query that
         root server instance.</t>
+        
+        <t>Removed the prohibition on distribution of recursive DNS servers
+        including configurations for this design because some already do,
+        and others have expressed an interest in doing so.</t>
 
         <t>[ This section will list all the changes from RFC 7706. For this
         draft, it is also the list of changes that we will make in future
