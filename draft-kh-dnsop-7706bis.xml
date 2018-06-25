@@ -64,8 +64,8 @@
 
       <t>[ This document is being collaborated on in Github at:
       https://github.com/wkumari/draft-kh-dnsop-7706bis. The most recent
-      version of the document, open issues, etc should all be available here.
-      The authors (gratefully) accept pull requests ]</t>
+      version of the document, open issues, and so on should all be available there.
+      The authors gratefully accept pull requests. ]</t>
     </abstract>
   </front>
 
@@ -76,17 +76,16 @@
       queried name that has a top-level domain (TLD) that is not in the
       recursive resolver's cache, the resolver must send a query to a root
       server to get the information for that TLD, or to find out that the TLD
-      does not exist. Typically, the vast majority of queries going to the
-      root are for names that do not exist in the root zone, and the negative
+      does not exist. Research shows that the vast majority of queries going to the
+      root are for names that do not exist in the root zone, partially because the negative
       answers are cached for a much shorter period of time. A slow path
       between the recursive resolver and the closest root server has a
       negative effect on the resolver's customers.</t>
 
-      <t>Recursive resolvers currently send queries for all TLDs that are not
-      in their caches to root servers, even though most of those queries get
+      <t>Many of the queries from recursive resolvers to root servers get
       answers that are referrals to other servers. Malicious third parties
       might be able to observe that traffic on the network between the
-      recursive resolver and one or more of the DNS roots.</t>
+      recursive resolver and root servers.</t>
 
       <t>This document describes a method for the operator of a recursive
       resolver to greatly speed these queries and to hide them from outsiders.
@@ -97,22 +96,21 @@
       just as it would all responses from a remote root server.</t>
 
       <t>The primary goals of this design are to provide faster negative
-      responses to stub resolver queries that contain junk queries, and to
+      responses to stub resolver queries that contain queries that result in NXDOMAIN responses, and to
       prevent queries and responses from being visible on the network. This
       design will probably have little effect on getting faster positive
-      responses to stub resolver for good queries on TLDs, because the data
-      for those zones is usually long-lived and already in the cache of the
-      recursive resolver; thus, getting faster positive responses is a
-      non-goal of this design.</t>
+      responses to stub resolver for good queries on TLDs, because the TTL for most TLDs
+      is usually long-lived (on the order of a day or two) and is thus usually already in the cache of the
+      recursive resolver.</t>
 
       <t>This design explicitly only allows the new root zone server to be run
       on the same server as the recursive resolver, in order to prevent the server from serving
       authoritative answers to any other system. Specifically, the root server
       on the local system MUST be configured to only answer queries from the
-      server, and MUST NOT answer queries from any other server.</t>
+      resolvers on the same host, and MUST NOT answer queries from any other resolver.</t>
 
-      <t>It is important to note that the design being described here is not
-      considered a "best practice". In fact, many people feel that it is an
+      <t>It is important to note that the design described in this document is controversial.
+      There is not consensus on whether this is a "best practice". In fact, many people feel that it is an
       excessively risky practice because it introduces a new operational piece
       to local DNS operations where there was not one before. The advantages
       listed above do not come free: if this new system does not work
@@ -143,6 +141,10 @@
         including configurations for this design because some already do,
         and others have expressed an interest in doing so.</t>
 
+        <t>Added the idea that a recursive resolver using this design might
+        switch to using the normal (remote) root servers if the local root
+        server fails.</t>
+        
         <t>[ This section will list all the changes from RFC 7706. For this
         draft, it is also the list of changes that we will make in future
         versions of the daft. ]</t>
@@ -187,7 +189,8 @@
           <t>The system MUST be able to validate a zone with DNSSEC <xref
           target="RFC4033"/>.</t>
 
-          <t>The system MUST have an up-to-date copy of the DNS root key.</t>
+          <t>The system MUST have an up-to-date copy of the key used to sign the
+          DNS root.</t>
 
           <t>The system MUST be able to retrieve a copy of the entire root
           zone (including all DNSSEC-related records).</t>
@@ -238,9 +241,16 @@
       target="RFC1035"/>. This inherently means that the contents of the local
       root zone will likely be a little behind those of the global root
       servers because those servers are updated when triggered by NOTIFY
-      messages. If the contents of the zone cannot be refreshed before the
-      expire time, the server MUST return a SERVFAIL error response for all
-      queries until the zone can be successfully be set up again.</t>
+      messages.</t>
+      
+      <t>If the contents of the root zone cannot be refreshed before the
+      expire time in the SOA, the local root server MUST return a SERVFAIL
+      error response for all queries sent to it until the zone can be
+      successfully be set up again. Because this would cause a recursive
+      resolver on the same host that is relying on this root server to also
+      fail, a resolver might be configured to immediatly switch to using other
+      (non-local) root servers if the resolver receives a SERVFAIL response
+      from a local root server.</t>
 
       <t>In the event that refreshing the contents of the root zone fails, the
       results can be disastrous. For example, sometimes all the NS records for
@@ -250,13 +260,14 @@
 
       <t>An administrator using the procedure in this document SHOULD have an
       automated method to check that the contents of the local root zone are
-      being refreshed. One way to do this is to have a separate process that
+      being refreshed; this might be part of the resolver software.
+      One way to do this is to have a separate process that
       periodically checks the SOA of the root zone from the local root zone
       and makes sure that it is changing. At the time that this document is
       published, the SOA for the root zone is the digital representation of
       the current date with a two-digit counter appended, and the SOA is
       changed every day even if the contents of the root zone are unchanged.
-      For example, the SOA of the root zone on January 2, 2015 was 2015010201.
+      For example, the SOA of the root zone on January 2, 2018 was 2018010201.
       A process can use this fact to create a check for the contents of the
       local root zone (using a program not specified in this document).</t>
     </section>
@@ -265,11 +276,16 @@
       <t>A recursive resolver that wants to use a root zone server operating
       as described in <xref target="zoneop"/> simply specifies the local
       address as the place to look when it is looking for information from the
-      root. All responses from the root server must be validated using
+      root. All responses from the root server MUST be validated using
       DNSSEC.</t>
 
-      <t>Note that using this configuration will cause the recursive resolver
-      to fail if the local root zone server fails. See <xref
+      <t>Note that using this simplistic configuration will cause the recursive resolver
+      to fail if the local root zone server fails. A more robust configuration
+      would cause the resolver to start using the normal remote root servers
+      when the local root server fails (such as if it does not respond
+      or gives SERVFAIL responses).</t>
+      
+      <t>See <xref
       target="examples"/> for more discussion of this for specific
       software.</t>
 
@@ -368,7 +384,7 @@
       <t>The examples here use a loopback address of 127.12.12.12, but typical
       installations will use 127.0.0.1. The different address is used in order
       to emphasize that the root server does not need to be on the device at the name
-      "localhost".</t>
+      "localhost" which is often locally served as 127.0.0.1.</t>
 
       <section title="Example Configuration: BIND 9.9">
         <t>BIND acts both as a recursive resolver and an authoritative server.
