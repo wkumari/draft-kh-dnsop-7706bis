@@ -8,11 +8,11 @@ Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Updates: 7706 (if approved)                                   P. Hoffman
 Intended status: Informational                                     ICANN
-Expires: December 26, 2018                                 June 24, 2018
+Expires: February 10, 2019                                August 9, 2018
 
 
 Decreasing Access Time to Root Servers by Running One On The Same Server
-                         draft-kh-dnsop-7706bis
+                        draft-ietf-dnsop-7706bis
 
 Abstract
 
@@ -55,15 +55,15 @@ Status of This Memo
 
 
 
-Kumari & Hoffman        Expires December 26, 2018               [Page 1]
+Kumari & Hoffman        Expires February 10, 2019               [Page 1]
 
-Internet-Draft            Running Root on Local                June 2018
+Internet-Draft            Running Root on Local              August 2018
 
 
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on December 26, 2018.
+   This Internet-Draft will expire on February 10, 2019.
 
 Copyright Notice
 
@@ -111,9 +111,9 @@ Table of Contents
 
 
 
-Kumari & Hoffman        Expires December 26, 2018               [Page 2]
+Kumari & Hoffman        Expires February 10, 2019               [Page 2]
 
-Internet-Draft            Running Root on Local                June 2018
+Internet-Draft            Running Root on Local              August 2018
 
 
    queries going to the root are for names that do not exist in the root
@@ -167,9 +167,9 @@ Internet-Draft            Running Root on Local                June 2018
 
 
 
-Kumari & Hoffman        Expires December 26, 2018               [Page 3]
+Kumari & Hoffman        Expires February 10, 2019               [Page 3]
 
-Internet-Draft            Running Root on Local                June 2018
+Internet-Draft            Running Root on Local              August 2018
 
 
    Unbound will need to be able to talk to an authoritative server (such
@@ -223,9 +223,9 @@ Internet-Draft            Running Root on Local                June 2018
 
 
 
-Kumari & Hoffman        Expires December 26, 2018               [Page 4]
+Kumari & Hoffman        Expires February 10, 2019               [Page 4]
 
-Internet-Draft            Running Root on Local                June 2018
+Internet-Draft            Running Root on Local              August 2018
 
 
    [ Refresh list of where one can get copies of the root zone. ]
@@ -279,9 +279,9 @@ Internet-Draft            Running Root on Local                June 2018
 
 
 
-Kumari & Hoffman        Expires December 26, 2018               [Page 5]
+Kumari & Hoffman        Expires February 10, 2019               [Page 5]
 
-Internet-Draft            Running Root on Local                June 2018
+Internet-Draft            Running Root on Local              August 2018
 
 
    2.  Start the authoritative server with the root zone on an address
@@ -335,9 +335,9 @@ Internet-Draft            Running Root on Local                June 2018
 
 
 
-Kumari & Hoffman        Expires December 26, 2018               [Page 6]
+Kumari & Hoffman        Expires February 10, 2019               [Page 6]
 
-Internet-Draft            Running Root on Local                June 2018
+Internet-Draft            Running Root on Local              August 2018
 
 
 4.  Using the Root Zone Server on the Same Host
@@ -391,9 +391,9 @@ Internet-Draft            Running Root on Local                June 2018
 
 
 
-Kumari & Hoffman        Expires December 26, 2018               [Page 7]
+Kumari & Hoffman        Expires February 10, 2019               [Page 7]
 
-Internet-Draft            Running Root on Local                June 2018
+Internet-Draft            Running Root on Local              August 2018
 
 
    [RFC4033]  Arends, R., Austein, R., Larson, M., Massey, D., and S.
@@ -447,9 +447,9 @@ Appendix A.  Current Sources of the Root Zone
 
 
 
-Kumari & Hoffman        Expires December 26, 2018               [Page 8]
+Kumari & Hoffman        Expires February 10, 2019               [Page 8]
 
-Internet-Draft            Running Root on Local                June 2018
+Internet-Draft            Running Root on Local              August 2018
 
 
 Appendix B.  Example Configurations of Common Implementations
@@ -503,9 +503,9 @@ B.1.  Example Configuration: BIND 9.9
 
 
 
-Kumari & Hoffman        Expires December 26, 2018               [Page 9]
+Kumari & Hoffman        Expires February 10, 2019               [Page 9]
 
-Internet-Draft            Running Root on Local                June 2018
+Internet-Draft            Running Root on Local              August 2018
 
 
    view root {
@@ -559,9 +559,9 @@ B.2.  Example Configuration: Unbound 1.4 and NSD 4
 
 
 
-Kumari & Hoffman        Expires December 26, 2018              [Page 10]
+Kumari & Hoffman        Expires February 10, 2019              [Page 10]
 
-Internet-Draft            Running Root on Local                June 2018
+Internet-Draft            Running Root on Local              August 2018
 
 
    # Configuration for Unbound
@@ -615,9 +615,9 @@ B.3.  Example Configuration: Microsoft Windows Server 2012
 
 
 
-Kumari & Hoffman        Expires December 26, 2018              [Page 11]
+Kumari & Hoffman        Expires February 10, 2019              [Page 11]
 
-Internet-Draft            Running Root on Local                June 2018
+Internet-Draft            Running Root on Local              August 2018
 
 
    4.  In the "Zone Name" dialog box, enter ".".
@@ -671,5 +671,5 @@ Authors' Addresses
 
 
 
-Kumari & Hoffman        Expires December 26, 2018              [Page 12]
+Kumari & Hoffman        Expires February 10, 2019              [Page 12]
 ```
