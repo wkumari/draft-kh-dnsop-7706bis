@@ -119,10 +119,10 @@
 
       <t>This design requires the addition of authoritative name server
       software running on the same machine as the recursive resolver. Thus,
-      recursive resolver software such as BIND will not need to add much new
-      functionality, but recursive resolver software such as Unbound will need
-      to be able to talk to an authoritative server (such as NSD) running on
-      the same host. However, more recursive resolver software might
+      recursive resolver software such as BIND or modern versions of Unbound do not need to add new
+      functionality, but other recursive resolver software might need
+      to be able to talk to an authoritative server running on
+      the same host. More recursive resolver software are expected
       add the capabilities described in this document in th future.</t>
 
       <t>A different approach to solving the problems discussed in this
@@ -150,8 +150,11 @@
         versions of the daft. ]</t>
 
         <t>[ Give a clearer comparison of software that allows slaving the
-        root zone in the software (such as BIND) versus resolver software that
-        requires a local slaved root zone (Unbound). ]</t>
+        root zone in the software (such as BIND or modern Unbound) versus resolver software that
+        requires a local slaved root zone (older Unbound). ]</t>
+        
+        <t>[ Add a description of Knot's cache-prefilling as way to get the data without
+        having a local authoritative. ]</t>
 
         <t>[ Add examples of other resolvers such as Knot Resolver and
         PowerDNS Recusor, and maybe Windows Server. ]</t>
@@ -455,7 +458,13 @@ view recursive {
         </figure>
       </section>
 
+      <section title="Example Configuration: Unbound 1.8">
+        <t>[ Add a description of Unbound 1.8's "auth-zone" configuration ]</t>
+      </section>
+
       <section title="Example Configuration: Unbound 1.4 and NSD 4">
+        <t>[ Do we still want this section? If so, maybe use Know without cache-prefilling. ]]</t>
+        
         <t>Unbound and NSD are separate software packages. Because of this,
         there is no "fate-sharing" between the two servers in the following
         configurations. That is, if the root server instance (NSD) dies, the
