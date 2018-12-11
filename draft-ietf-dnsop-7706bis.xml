@@ -354,6 +354,8 @@
 
           <t>c.root-servers.net</t>
 
+          <t>d.root-servers.net</t>
+
           <t>f.root-servers.net</t>
 
           <t>g.root-servers.net</t>
@@ -429,17 +431,21 @@ view root {
         file "rootzone.db";
         notify no;
         masters {
-            192.228.79.201; # b.root-servers.net
-            192.33.4.12;    # c.root-servers.net
-            192.5.5.241;    # f.root-servers.net
-            192.112.36.4;   # g.root-servers.net
-            193.0.14.129;   # k.root-servers.net
-            192.0.47.132;   # xfr.cjr.dns.icann.org
-            192.0.32.132;   # xfr.lax.dns.icann.org
-            2001:500:84::b; # b.root-servers.net
-            2001:500:2f::f; # f.root-servers.net
-            2001:7fd::1;    # k.root-servers.net
-            2620:0:2830:202::132;  # xfr.cjr.dns.icann.org
+            192.228.79.201;       # b.root-servers.net
+            192.33.4.12;          # c.root-servers.net
+            199.7.91.13;          # d.root-servers.net
+            192.5.5.241;          # f.root-servers.net
+            192.112.36.4;         # g.root-servers.net
+            193.0.14.129;         # k.root-servers.net
+            192.0.47.132;         # xfr.cjr.dns.icann.org
+            192.0.32.132;         # xfr.lax.dns.icann.org
+            2001:500:84::b;       # b.root-servers.net
+            2001:500:2::c;        # c.root-servers.net
+            2001:500:2d::d;       # d.root-servers.net
+            2001:500:2f::f;       # f.root-servers.net
+            2001:500:12::d0d;     # g.root-servers.net
+            2001:7fd::1;          # k.root-servers.net
+            2620:0:2830:202::132; # xfr.cjr.dns.icann.org
             2620:0:2d0:202::132;  # xfr.lax.dns.icann.org
         };
     };
@@ -491,17 +497,21 @@ server:
     ip-address: 127.12.12.12
 zone:
     name: "."
-    request-xfr: 192.228.79.201 NOKEY # b.root-servers.net
-    request-xfr: 192.33.4.12 NOKEY    # c.root-servers.net
-    request-xfr: 192.5.5.241 NOKEY    # f.root-servers.net
-    request-xfr: 192.112.36.4 NOKEY   # g.root-servers.net
-    request-xfr: 193.0.14.129 NOKEY   # k.root-servers.net
-    request-xfr: 192.0.47.132 NOKEY   # xfr.cjr.dns.icann.org
-    request-xfr: 192.0.32.132 NOKEY   # xfr.lax.dns.icann.org
-    request-xfr: 2001:500:84::b NOKEY # b.root-servers.net
-    request-xfr: 2001:500:2f::f NOKEY # f.root-servers.net
-    request-xfr: 2001:7fd::1 NOKEY    # k.root-servers.net
-    request-xfr: 2620:0:2830:202::132 NOKEY  # xfr.cjr.dns.icann.org
+    request-xfr: 192.228.79.201 NOKEY       # b.root-servers.net
+    request-xfr: 192.33.4.12 NOKEY          # c.root-servers.net
+    request-xfr: 199.7.91.13 NOKEY          # d.root-servers.net
+    request-xfr: 192.5.5.241 NOKEY          # f.root-servers.net
+    request-xfr: 192.112.36.4 NOKEY         # g.root-servers.net
+    request-xfr: 193.0.14.129 NOKEY         # k.root-servers.net
+    request-xfr: 192.0.47.132 NOKEY         # xfr.cjr.dns.icann.org
+    request-xfr: 192.0.32.132 NOKEY         # xfr.lax.dns.icann.org
+    request-xfr: 2001:500:84::b NOKEY       # b.root-servers.net
+    request-xfr: 2001:500:2::c NOKEY        # c.root-servers.net
+    request-xfr: 2001:500:2d::d NOKEY       # d.root-servers.net
+    request-xfr: 2001:500:2f::f NOKEY       # f.root-servers.net
+    request-xfr: 2001:500:12::d0d NOKEY     # g.root-servers.net
+    request-xfr: 2001:7fd::1 NOKEY          # k.root-servers.net
+    request-xfr: 2620:0:2830:202::132 NOKEY # xfr.cjr.dns.icann.org
     request-xfr: 2620:0:2d0:202::132 NOKEY  # xfr.lax.dns.icann.org
 ]]></artwork>
         </figure>
