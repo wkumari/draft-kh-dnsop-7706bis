@@ -465,7 +465,33 @@ view recursive {
       </section>
 
       <section title="Example Configuration: Unbound 1.8">
-        <t>[ Add a description of Unbound 1.8's "auth-zone" configuration ]</t>
+        <t>Similar to BIND, Unbound starting with version 1.8 can act both
+	as a recursive resolver and an authoritative server.</t>
+        <figure>
+          <artwork><![CDATA[
+auth-zone:
+    name: "."
+    master: 192.228.79.201       # b.root-servers.net
+    master: 192.33.4.12          # c.root-servers.net
+    master: 199.7.91.13          # d.root-servers.net
+    master: 192.5.5.241          # f.root-servers.net
+    master: 192.112.36.4         # g.root-servers.net
+    master: 193.0.14.129         # k.root-servers.net
+    master: 192.0.47.132         # xfr.cjr.dns.icann.org
+    master: 192.0.32.132         # xfr.lax.dns.icann.org
+    master: 2001:500:84::b       # b.root-servers.net
+    master: 2001:500:2::c        # c.root-servers.net
+    master: 2001:500:2d::d       # d.root-servers.net
+    master: 2001:500:2f::f       # f.root-servers.net
+    master: 2001:500:12::d0d     # g.root-servers.net
+    master: 2001:7fd::1          # k.root-servers.net
+    master: 2620:0:2830:202::132 # xfr.cjr.dns.icann.org
+    master: 2620:0:2d0:202::132  # xfr.lax.dns.icann.org
+    fallback-enabled: yes
+    for-downstream: no
+    for-upstream: yes
+]]></artwork>
+        </figure>
       </section>
 
       <section title="Example Configuration: Unbound 1.4 and NSD 4">
