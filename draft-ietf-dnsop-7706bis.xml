@@ -123,7 +123,7 @@
       functionality, but other recursive resolver software might need
       to be able to talk to an authoritative server running on
       the same host. More recursive resolver software are expected
-      add the capabilities described in this document in th future.</t>
+      add the capabilities described in this document in the future.</t>
 
       <t>A different approach to solving the problems discussed in this
       document is described in <xref target="RFC8198"/>.</t>
