@@ -42,7 +42,7 @@
       </address>
     </author>
 
-    <date year="2018"/>
+    <date year="2019"/>
 
     <abstract>
       <t>Some DNS recursive resolvers have longer-than-desired round-trip
@@ -109,15 +109,18 @@
       on the local system MUST be configured to only answer queries from the
       resolvers on the same host, and MUST NOT answer queries from any other resolver.</t>
 
-      <t>It is important to note that the design described in this document is controversial.
-      There is not consensus on whether this is a "best practice". In fact, many people feel that it is an
-      excessively risky practice because it introduces a new operational piece
-      to local DNS operations where there was not one before. The advantages
+      <t>At the time that RFC 7706 was published, it was considered controversial
+      There was not consensus on whether this was a "best practice". In fact, many people felt that it is an
+      excessively risky practice because it introduced a new operational piece
+      to local DNS operations where there was not one before.
+      Since then, the DNS operational community has largely shifted to believing
+      that local serving of the root zone for an individual resolver is a reasonable practice.
+      The advantages
       listed above do not come free: if this new system does not work
       correctly, users can get bad data, or the entire recursive resolution
       system might fail in ways that are hard to diagnose.</t>
 
-      <t>This design requires the addition of authoritative name server
+      <t>This design uses authoritative name server
       software running on the same machine as the recursive resolver. Thus,
       recursive resolver software such as BIND or modern versions of Unbound do not need to add new
       functionality, but other recursive resolver software might need
@@ -125,7 +128,7 @@
       the same host. More recursive resolver software are expected
       add the capabilities described in this document in the future.</t>
 
-      <t>A different approach to solving the problems discussed in this
+      <t>A different approach to solving some of the problems discussed in this
       document is described in <xref target="RFC8198"/>.</t>
 
       <section title="Updates from RFC 7706">
@@ -156,8 +159,7 @@
         <t>[ Add a description of Knot's cache-prefilling as way to get the data without
         having a local authoritative. ]</t>
 
-        <t>[ Add examples of other resolvers such as Knot Resolver and
-        PowerDNS Recusor, and maybe Windows Server. ]</t>
+        <t>[ Add examples of other resolvers such as PowerDNS Recusor. ]</t>
 
         <t>[ Add discussion of BIND slaving the root zone in the same view
         instead of using different views. ]</t>
@@ -494,53 +496,14 @@ auth-zone:
         </figure>
       </section>
 
-      <section title="Example Configuration: Unbound 1.4 and NSD 4">
-        <t>[ Do we still want this section? If so, maybe use Know without cache-prefilling. ]]</t>
-        
-        <t>Unbound and NSD are separate software packages. Because of this,
-        there is no "fate-sharing" between the two servers in the following
-        configurations. That is, if the root server instance (NSD) dies, the
-        recursive resolver instance (Unbound) will probably keep running but
-        will not be able to resolve any queries for the root zone. Therefore,
-        the administrator of this configuration might want to carefully
-        monitor the NSD instance and restart it immediately if it dies.</t>
+      <section title="Example Configuration: Unbound">
+        <t>[ Add an example of modern Unbound, or point to the Unbound documentation where it exists ]</t>
+      </section>
 
-        <t>Using this configuration, queries for information in the root zone
-        are returned with the AA bit not set.</t>
-
-        <figure>
-          <artwork><![CDATA[
-# Configuration for Unbound
-server:
-    do-not-query-localhost: no
-stub-zone:
-    name: "."
-    stub-prime: no
-    stub-addr: 127.12.12.12
-
-# Configuration for NSD
-server:
-    ip-address: 127.12.12.12
-zone:
-    name: "."
-    request-xfr: 192.228.79.201 NOKEY       # b.root-servers.net
-    request-xfr: 192.33.4.12 NOKEY          # c.root-servers.net
-    request-xfr: 199.7.91.13 NOKEY          # d.root-servers.net
-    request-xfr: 192.5.5.241 NOKEY          # f.root-servers.net
-    request-xfr: 192.112.36.4 NOKEY         # g.root-servers.net
-    request-xfr: 193.0.14.129 NOKEY         # k.root-servers.net
-    request-xfr: 192.0.47.132 NOKEY         # xfr.cjr.dns.icann.org
-    request-xfr: 192.0.32.132 NOKEY         # xfr.lax.dns.icann.org
-    request-xfr: 2001:500:84::b NOKEY       # b.root-servers.net
-    request-xfr: 2001:500:2::c NOKEY        # c.root-servers.net
-    request-xfr: 2001:500:2d::d NOKEY       # d.root-servers.net
-    request-xfr: 2001:500:2f::f NOKEY       # f.root-servers.net
-    request-xfr: 2001:500:12::d0d NOKEY     # g.root-servers.net
-    request-xfr: 2001:7fd::1 NOKEY          # k.root-servers.net
-    request-xfr: 2620:0:2830:202::132 NOKEY # xfr.cjr.dns.icann.org
-    request-xfr: 2620:0:2d0:202::132 NOKEY  # xfr.lax.dns.icann.org
-]]></artwork>
-        </figure>
+      <section title="Example Configuration: Knot Resolver">
+        <t>Knot Resolver uses its "prefill" module to load the root zone information.
+        This is described at
+        &lt;https://knot-resolver.readthedocs.io/en/stable/modules.html#root-on-loopback-rfc-7706&gt;.</t>
       </section>
 
       <section title="Example Configuration: Microsoft Windows Server 2012">
@@ -597,6 +560,9 @@ zone:
       offline comments about making the document clear that this is just a
       description of a way to operate a root zone on the same host, and not a
       recommendation to do so.</t>
+      
+      <!-- Add new acknowledgements, including nusenu -->
+      
     </section>
   </back>
 </rfc>
