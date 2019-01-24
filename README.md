@@ -154,7 +154,7 @@ Internet-Draft            Running Root on Local             January 2019
    NOT answer queries from any other resolver.
 
    At the time that RFC 7706 was published, it was considered
-   controversial There was not consensus on whether this was a "best
+   controversial - there was not consensus on whether this was a "best
    practice".  In fact, many people felt that it is an excessively risky
    practice because it introduced a new operational piece to local DNS
    operations where there was not one before.  Since then, the DNS
