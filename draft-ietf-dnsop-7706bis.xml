@@ -386,11 +386,6 @@
       testing for AXFR over TCP from each address for the known single-letter
       names in the root-servers.net zone.</t>
 
-      <t>The examples here use a loopback address of 127.12.12.12, but typical
-      installations will use 127.0.0.1. The different address is used in order
-      to emphasize that the root server does not need to be on the device at the name
-      "localhost" which is often locally served as 127.0.0.1.</t>
-
       <section title="Example Configuration: BIND 9.9">
         <t>BIND acts both as a recursive resolver and an authoritative server.
         Because of this, there is "fate-sharing" between the two servers in
