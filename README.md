@@ -8,7 +8,7 @@ Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Updates: 7706 (if approved)                                   P. Hoffman
 Intended status: Informational                                     ICANN
-Expires: April 25, 2019                                 October 22, 2018
+Expires: July 27, 2019                                  January 23, 2019
 
 
 Decreasing Access Time to Root Servers by Running One On The Same Server
@@ -55,19 +55,19 @@ Status of This Memo
 
 
 
-Kumari & Hoffman         Expires April 25, 2019                 [Page 1]
+Kumari & Hoffman          Expires July 27, 2019                 [Page 1]
 
-Internet-Draft            Running Root on Local             October 2018
+Internet-Draft            Running Root on Local             January 2019
 
 
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on April 25, 2019.
+   This Internet-Draft will expire on July 27, 2019.
 
 Copyright Notice
 
-   Copyright (c) 2018 IETF Trust and the persons identified as the
+   Copyright (c) 2019 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -96,8 +96,9 @@ Table of Contents
    Appendix B.  Example Configurations of Common Implementations . .   9
      B.1.  Example Configuration: BIND 9.9 . . . . . . . . . . . . .   9
      B.2.  Example Configuration: Unbound 1.8  . . . . . . . . . . .  10
-     B.3.  Example Configuration: Unbound 1.4 and NSD 4  . . . . . .  10
-     B.4.  Example Configuration: Microsoft Windows Server 2012  . .  11
+     B.3.  Example Configuration: Unbound  . . . . . . . . . . . . .  11
+     B.4.  Example Configuration: Knot Resolver  . . . . . . . . . .  11
+     B.5.  Example Configuration: Microsoft Windows Server 2012  . .  11
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  12
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  12
 
@@ -107,15 +108,15 @@ Table of Contents
    their customers, even those for domain names that do not exist.  For
    each queried name that has a top-level domain (TLD) that is not in
    the recursive resolver's cache, the resolver must send a query to a
-   root server to get the information for that TLD, or to find out that
 
 
 
-Kumari & Hoffman         Expires April 25, 2019                 [Page 2]
+Kumari & Hoffman          Expires July 27, 2019                 [Page 2]
 
-Internet-Draft            Running Root on Local             October 2018
+Internet-Draft            Running Root on Local             January 2019
 
 
+   root server to get the information for that TLD, or to find out that
    the TLD does not exist.  Research shows that the vast majority of
    queries going to the root are for names that do not exist in the root
    zone, partially because the negative answers are cached for a much
@@ -152,34 +153,35 @@ Internet-Draft            Running Root on Local             October 2018
    to only answer queries from the resolvers on the same host, and MUST
    NOT answer queries from any other resolver.
 
-   It is important to note that the design described in this document is
-   controversial.  There is not consensus on whether this is a "best
-   practice".  In fact, many people feel that it is an excessively risky
-   practice because it introduces a new operational piece to local DNS
-   operations where there was not one before.  The advantages listed
-   above do not come free: if this new system does not work correctly,
-   users can get bad data, or the entire recursive resolution system
-   might fail in ways that are hard to diagnose.
-
-   This design requires the addition of authoritative name server
-   software running on the same machine as the recursive resolver.
-   Thus, recursive resolver software such as BIND or modern versions of
-
+   At the time that RFC 7706 was published, it was considered
+   controversial - there was not consensus on whether this was a "best
+   practice".  In fact, many people felt that it is an excessively risky
+   practice because it introduced a new operational piece to local DNS
+   operations where there was not one before.  Since then, the DNS
+   operational community has largely shifted to believing that local
+   serving of the root zone for an individual resolver is a reasonable
+   practice.  The advantages listed above do not come free: if this new
+   system does not work correctly, users can get bad data, or the entire
+   recursive resolution system might fail in ways that are hard to
+   diagnose.
 
 
-Kumari & Hoffman         Expires April 25, 2019                 [Page 3]
+
+Kumari & Hoffman          Expires July 27, 2019                 [Page 3]
 
-Internet-Draft            Running Root on Local             October 2018
+Internet-Draft            Running Root on Local             January 2019
 
 
-   Unbound do not need to add new functionality, but other recursive
-   resolver software might need to be able to talk to an authoritative
-   server running on the same host.  More recursive resolver software
-   are expected add the capabilities described in this document in th
-   future.
+   This design uses authoritative name server software running on the
+   same machine as the recursive resolver.  Thus, recursive resolver
+   software such as BIND or modern versions of Unbound do not need to
+   add new functionality, but other recursive resolver software might
+   need to be able to talk to an authoritative server running on the
+   same host.  More recursive resolver software are expected add the
+   capabilities described in this document in the future.
 
-   A different approach to solving the problems discussed in this
-   document is described in [RFC8198].
+   A different approach to solving some of the problems discussed in
+   this document is described in [RFC8198].
 
 1.1.  Updates from RFC 7706
 
@@ -210,23 +212,24 @@ Internet-Draft            Running Root on Local             October 2018
    [ Add a description of Knot's cache-prefilling as way to get the data
    without having a local authoritative. ]
 
-   [ Add examples of other resolvers such as Knot Resolver and PowerDNS
-   Recusor, and maybe Windows Server. ]
+   [ Add examples of other resolvers such as PowerDNS Recusor. ]
 
    [ Add discussion of BIND slaving the root zone in the same view
    instead of using different views. ]
 
    [ Make the use cases explicit.  Be clearer that a real use case is
    folks who are worried that root server unavailabilty due to DDoS
+
+
+
+
+Kumari & Hoffman          Expires July 27, 2019                 [Page 4]
+
+Internet-Draft            Running Root on Local             January 2019
+
+
    against them is a reason some people would use the mechanisms here.
    ]
-
-
-
-Kumari & Hoffman         Expires April 25, 2019                 [Page 4]
-
-Internet-Draft            Running Root on Local             October 2018
-
 
    [ Describe how slaving the root zone from root zone servers does not
    fully remove the reliance on the root servers being available.  ]
@@ -257,8 +260,8 @@ Internet-Draft            Running Root on Local             October 2018
       root zone on the same host.  The root server instance MUST only
       respond to queries from the same host.  One way to assure not
       responding to queries from other hosts is to make the address of
-      the authoritative server one of the IPv4 loopback addresses (that
-      is, an address in the range 127/8 for IPv4 or ::1 in IPv6).
+      the authoritative server one of the loopback addresses (that is,
+      an address in the range 127/8 for IPv4 or ::1 in IPv6).
 
    A corollary of the above list is that authoritative data in the root
    zone used on the local authoritative server MUST be identical to the
@@ -272,17 +275,19 @@ Internet-Draft            Running Root on Local             October 2018
 
    The operation of an authoritative server for the root in the system
    described here can be done separately from the operation of the
+
+
+
+
+Kumari & Hoffman          Expires July 27, 2019                 [Page 5]
+
+Internet-Draft            Running Root on Local             January 2019
+
+
    recursive resolver, or it might be part of the configuration of the
    recursive resolver system.
 
    The steps to set up the root zone are:
-
-
-
-Kumari & Hoffman         Expires April 25, 2019                 [Page 5]
-
-Internet-Draft            Running Root on Local             October 2018
-
 
    1.  Retrieve a copy of the root zone.  (See Appendix A for some
        current locations of sources.)
@@ -327,18 +332,18 @@ Internet-Draft            Running Root on Local             October 2018
    published, the SOA for the root zone is the digital representation of
    the current date with a two-digit counter appended, and the SOA is
    changed every day even if the contents of the root zone are
+
+
+
+Kumari & Hoffman          Expires July 27, 2019                 [Page 6]
+
+Internet-Draft            Running Root on Local             January 2019
+
+
    unchanged.  For example, the SOA of the root zone on January 2, 2018
    was 2018010201.  A process can use this fact to create a check for
    the contents of the local root zone (using a program not specified in
    this document).
-
-
-
-
-Kumari & Hoffman         Expires April 25, 2019                 [Page 6]
-
-Internet-Draft            Running Root on Local             October 2018
-
 
 4.  Using the Root Zone Server on the Same Host
 
@@ -384,17 +389,17 @@ Internet-Draft            Running Root on Local             October 2018
               specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
               November 1987, <https://www.rfc-editor.org/info/rfc1035>.
 
+
+
+Kumari & Hoffman          Expires July 27, 2019                 [Page 7]
+
+Internet-Draft            Running Root on Local             January 2019
+
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
-
-
-
-Kumari & Hoffman         Expires April 25, 2019                 [Page 7]
-
-Internet-Draft            Running Root on Local             October 2018
-
 
    [RFC4033]  Arends, R., Austein, R., Larson, M., Massey, D., and S.
               Rose, "DNS Security Introduction and Requirements",
@@ -425,6 +430,8 @@ Appendix A.  Current Sources of the Root Zone
 
    o  c.root-servers.net
 
+   o  d.root-servers.net
+
    o  f.root-servers.net
 
    o  g.root-servers.net
@@ -436,6 +443,15 @@ Appendix A.  Current Sources of the Root Zone
    server operators will turn off the AXFR capability on the servers
    listed above.  Using AXFR over TCP to addresses that are likely to be
    anycast (as the ones above are) may conceivably have transfer
+
+
+
+
+Kumari & Hoffman          Expires July 27, 2019                 [Page 8]
+
+Internet-Draft            Running Root on Local             January 2019
+
+
    problems due to anycast, but current practice shows that to be
    unlikely.
 
@@ -443,14 +459,6 @@ Appendix A.  Current Sources of the Root Zone
    contents of the zone cannot be refreshed before the expire time, the
    server MUST return a SERVFAIL error response for all queries until
    the zone can be successfully be set up again.
-
-
-
-
-Kumari & Hoffman         Expires April 25, 2019                 [Page 8]
-
-Internet-Draft            Running Root on Local             October 2018
-
 
 Appendix B.  Example Configurations of Common Implementations
 
@@ -492,21 +500,19 @@ B.1.  Example Configuration: BIND 9.9
       server will cache all of the queries for the slaved zone, just as
       it would using the traditional "root hints" method.  Thus, as the
       zone in the other view or instance is refreshed or updated,
+
+
+
+Kumari & Hoffman          Expires July 27, 2019                 [Page 9]
+
+Internet-Draft            Running Root on Local             January 2019
+
+
       changed information will not appear in the recursive server until
       the TTL of the old record times out.  Currently, the TTL for DS
       and delegation NS records is two days.  When using the same view,
       all zone data in the recursive server will be updated as soon as
       it receives its copy of the zone.
-
-
-
-
-
-
-Kumari & Hoffman         Expires April 25, 2019                 [Page 9]
-
-Internet-Draft            Running Root on Local             October 2018
-
 
    view root {
        match-destinations { 127.12.12.12; };
@@ -515,17 +521,21 @@ Internet-Draft            Running Root on Local             October 2018
            file "rootzone.db";
            notify no;
            masters {
-               192.228.79.201; # b.root-servers.net
-               192.33.4.12;    # c.root-servers.net
-               192.5.5.241;    # f.root-servers.net
-               192.112.36.4;   # g.root-servers.net
-               193.0.14.129;   # k.root-servers.net
-               192.0.47.132;   # xfr.cjr.dns.icann.org
-               192.0.32.132;   # xfr.lax.dns.icann.org
-               2001:500:84::b; # b.root-servers.net
-               2001:500:2f::f; # f.root-servers.net
-               2001:7fd::1;    # k.root-servers.net
-               2620:0:2830:202::132;  # xfr.cjr.dns.icann.org
+               192.228.79.201;       # b.root-servers.net
+               192.33.4.12;          # c.root-servers.net
+               199.7.91.13;          # d.root-servers.net
+               192.5.5.241;          # f.root-servers.net
+               192.112.36.4;         # g.root-servers.net
+               193.0.14.129;         # k.root-servers.net
+               192.0.47.132;         # xfr.cjr.dns.icann.org
+               192.0.32.132;         # xfr.lax.dns.icann.org
+               2001:500:84::b;       # b.root-servers.net
+               2001:500:2::c;        # c.root-servers.net
+               2001:500:2d::d;       # d.root-servers.net
+               2001:500:2f::f;       # f.root-servers.net
+               2001:500:12::d0d;     # g.root-servers.net
+               2001:7fd::1;          # k.root-servers.net
+               2620:0:2830:202::132; # xfr.cjr.dns.icann.org
                2620:0:2d0:202::132;  # xfr.lax.dns.icann.org
            };
        };
@@ -543,60 +553,52 @@ Internet-Draft            Running Root on Local             October 2018
 
 B.2.  Example Configuration: Unbound 1.8
 
-   [ Add a description of Unbound 1.8's "auth-zone" configuration ]
-
-B.3.  Example Configuration: Unbound 1.4 and NSD 4
-
-   [ Do we still want this section?  If so, maybe use Know without
-   cache-prefilling. ]]
-
-   Unbound and NSD are separate software packages.  Because of this,
-   there is no "fate-sharing" between the two servers in the following
-   configurations.  That is, if the root server instance (NSD) dies, the
-   recursive resolver instance (Unbound) will probably keep running but
-   will not be able to resolve any queries for the root zone.
-   Therefore, the administrator of this configuration might want to
+   Similar to BIND, Unbound starting with version 1.8 can act both as a
+   recursive resolver and an authoritative server.
 
 
 
-Kumari & Hoffman         Expires April 25, 2019                [Page 10]
+
+Kumari & Hoffman          Expires July 27, 2019                [Page 10]
 
-Internet-Draft            Running Root on Local             October 2018
+Internet-Draft            Running Root on Local             January 2019
 
 
-   carefully monitor the NSD instance and restart it immediately if it
-   dies.
-
-   Using this configuration, queries for information in the root zone
-   are returned with the AA bit not set.
-
-   # Configuration for Unbound
-   server:
-       do-not-query-localhost: no
-   stub-zone:
+   auth-zone:
        name: "."
-       stub-prime: no
-       stub-addr: 127.12.12.12
+       master: 192.228.79.201       # b.root-servers.net
+       master: 192.33.4.12          # c.root-servers.net
+       master: 199.7.91.13          # d.root-servers.net
+       master: 192.5.5.241          # f.root-servers.net
+       master: 192.112.36.4         # g.root-servers.net
+       master: 193.0.14.129         # k.root-servers.net
+       master: 192.0.47.132         # xfr.cjr.dns.icann.org
+       master: 192.0.32.132         # xfr.lax.dns.icann.org
+       master: 2001:500:84::b       # b.root-servers.net
+       master: 2001:500:2::c        # c.root-servers.net
+       master: 2001:500:2d::d       # d.root-servers.net
+       master: 2001:500:2f::f       # f.root-servers.net
+       master: 2001:500:12::d0d     # g.root-servers.net
+       master: 2001:7fd::1          # k.root-servers.net
+       master: 2620:0:2830:202::132 # xfr.cjr.dns.icann.org
+       master: 2620:0:2d0:202::132  # xfr.lax.dns.icann.org
+       fallback-enabled: yes
+       for-downstream: no
+       for-upstream: yes
 
-   # Configuration for NSD
-   server:
-       ip-address: 127.12.12.12
-   zone:
-       name: "."
-       request-xfr: 192.228.79.201 NOKEY # b.root-servers.net
-       request-xfr: 192.33.4.12 NOKEY    # c.root-servers.net
-       request-xfr: 192.5.5.241 NOKEY    # f.root-servers.net
-       request-xfr: 192.112.36.4 NOKEY   # g.root-servers.net
-       request-xfr: 193.0.14.129 NOKEY   # k.root-servers.net
-       request-xfr: 192.0.47.132 NOKEY   # xfr.cjr.dns.icann.org
-       request-xfr: 192.0.32.132 NOKEY   # xfr.lax.dns.icann.org
-       request-xfr: 2001:500:84::b NOKEY # b.root-servers.net
-       request-xfr: 2001:500:2f::f NOKEY # f.root-servers.net
-       request-xfr: 2001:7fd::1 NOKEY    # k.root-servers.net
-       request-xfr: 2620:0:2830:202::132 NOKEY  # xfr.cjr.dns.icann.org
-       request-xfr: 2620:0:2d0:202::132 NOKEY  # xfr.lax.dns.icann.org
+B.3.  Example Configuration: Unbound
 
-B.4.  Example Configuration: Microsoft Windows Server 2012
+   [ Add an example of modern Unbound, or point to the Unbound
+   documentation where it exists ]
+
+B.4.  Example Configuration: Knot Resolver
+
+   Knot Resolver uses its "prefill" module to load the root zone
+   information.  This is described at <https://knot-
+   resolver.readthedocs.io/en/stable/modules.html#root-on-loopback-rfc-
+   7706>.
+
+B.5.  Example Configuration: Microsoft Windows Server 2012
 
    Windows Server 2012 contains a DNS server in the "DNS Manager"
    component.  When activated, that component acts as a recursive
@@ -608,17 +610,19 @@ B.4.  Example Configuration: Microsoft Windows Server 2012
    The steps to configure DNS Manager to implement the requirements in
    this document are:
 
+
+
+
+
+
+Kumari & Hoffman          Expires July 27, 2019                [Page 11]
+
+Internet-Draft            Running Root on Local             January 2019
+
+
    1.  Launch the DNS Manager GUI.  This can be done from the command
        line ("dnsmgmt.msc") or from the Service Manager (the "DNS"
        command in the "Tools" menu).
-
-
-
-
-Kumari & Hoffman         Expires April 25, 2019                [Page 11]
-
-Internet-Draft            Running Root on Local             October 2018
-
 
    2.  In the hierarchy under the server on which the service is
        running, right-click on the "Forward Lookup Zones", and select
@@ -661,19 +665,21 @@ Acknowledgements
 
 Authors' Addresses
 
+
+
+
+
+
+
+Kumari & Hoffman          Expires July 27, 2019                [Page 12]
+
+Internet-Draft            Running Root on Local             January 2019
+
+
    Warren Kumari
    Google
 
    Email: Warren@kumari.net
-
-
-
-
-
-
-Kumari & Hoffman         Expires April 25, 2019                [Page 12]
-
-Internet-Draft            Running Root on Local             October 2018
 
 
    Paul Hoffman
@@ -721,11 +727,5 @@ Internet-Draft            Running Root on Local             October 2018
 
 
 
-
-
-
-
-
-
-Kumari & Hoffman         Expires April 25, 2019                [Page 13]
+Kumari & Hoffman          Expires July 27, 2019                [Page 13]
 ```
