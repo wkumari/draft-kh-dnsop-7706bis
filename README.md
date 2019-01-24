@@ -8,10 +8,10 @@ Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Updates: 7706 (if approved)                                   P. Hoffman
 Intended status: Informational                                     ICANN
-Expires: July 27, 2019                                  January 23, 2019
+Expires: July 28, 2019                                  January 24, 2019
 
 
-Decreasing Access Time to Root Servers by Running One On The Same Server
+               Running a Root Server Local to a Resolver
                         draft-ietf-dnsop-7706bis
 
 Abstract
@@ -55,15 +55,15 @@ Status of This Memo
 
 
 
-Kumari & Hoffman          Expires July 27, 2019                 [Page 1]
+Kumari & Hoffman          Expires July 28, 2019                 [Page 1]
 
-Internet-Draft            Running Root on Local             January 2019
+Internet-Draft              Root Server Local               January 2019
 
 
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 27, 2019.
+   This Internet-Draft will expire on July 28, 2019.
 
 Copyright Notice
 
@@ -100,7 +100,7 @@ Table of Contents
      B.4.  Example Configuration: Knot Resolver  . . . . . . . . . .  11
      B.5.  Example Configuration: Microsoft Windows Server 2012  . .  11
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  12
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  12
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
 
 1.  Introduction
 
@@ -111,40 +111,39 @@ Table of Contents
 
 
 
-Kumari & Hoffman          Expires July 27, 2019                 [Page 2]
+Kumari & Hoffman          Expires July 28, 2019                 [Page 2]
 
-Internet-Draft            Running Root on Local             January 2019
+Internet-Draft              Root Server Local               January 2019
 
 
    root server to get the information for that TLD, or to find out that
    the TLD does not exist.  Research shows that the vast majority of
    queries going to the root are for names that do not exist in the root
-   zone, partially because the negative answers are cached for a much
-   shorter period of time.  A slow path between the recursive resolver
-   and the closest root server has a negative effect on the resolver's
-   customers.
+   zone, partially because the negative answers are sometimes cached for
+   a much shorter period of time.
 
    Many of the queries from recursive resolvers to root servers get
    answers that are referrals to other servers.  Malicious third parties
    might be able to observe that traffic on the network between the
    recursive resolver and root servers.
 
-   This document describes a method for the operator of a recursive
-   resolver to greatly speed these queries and to hide them from
-   outsiders.  The basic idea is to create an up-to-date root zone
-   server on the same host as the recursive server, and use that server
-   when the recursive resolver looks up root information.  The recursive
-   resolver validates all responses from the root server on the same
-   host, just as it would all responses from a remote root server.
+   The primary goals of this design are to provide more reliable answers
+   for queries to the root zone during network attacks, and to prevent
+   queries and responses from being visible on the network.  This design
+   will probably have little effect on getting faster responses to stub
+   resolver for good queries on TLDs, because the TTL for most TLDs is
+   usually long-lived (on the order of a day or two) and is thus usually
+   already in the cache of the recursive resolver; the same is true for
+   the TTL for negative answers from the root servers.
 
-   The primary goals of this design are to provide faster negative
-   responses to stub resolver queries that contain queries that result
-   in NXDOMAIN responses, and to prevent queries and responses from
-   being visible on the network.  This design will probably have little
-   effect on getting faster positive responses to stub resolver for good
-   queries on TLDs, because the TTL for most TLDs is usually long-lived
-   (on the order of a day or two) and is thus usually already in the
-   cache of the recursive resolver.
+   This document describes a method for the operator of a recursive
+   resolver to have a complete root zone locally, and to hide these
+   queries from outsiders.  The basic idea is to create an up-to-date
+   root zone server on the same host as the recursive server, and use
+   that server when the recursive resolver looks up root information.
+   The recursive resolver validates all responses from the root server
+   on the same host, just as it would all responses from a remote root
+   server.
 
    This design explicitly only allows the new root zone server to be run
    on the same server as the recursive resolver, in order to prevent the
@@ -154,7 +153,7 @@ Internet-Draft            Running Root on Local             January 2019
    NOT answer queries from any other resolver.
 
    At the time that RFC 7706 was published, it was considered
-   controversial - there was not consensus on whether this was a "best
+   controversial: there was not consensus on whether this was a "best
    practice".  In fact, many people felt that it is an excessively risky
    practice because it introduced a new operational piece to local DNS
    operations where there was not one before.  Since then, the DNS
@@ -167,18 +166,18 @@ Internet-Draft            Running Root on Local             January 2019
 
 
 
-Kumari & Hoffman          Expires July 27, 2019                 [Page 3]
+
+Kumari & Hoffman          Expires July 28, 2019                 [Page 3]
 
-Internet-Draft            Running Root on Local             January 2019
+Internet-Draft              Root Server Local               January 2019
 
 
    This design uses authoritative name server software running on the
    same machine as the recursive resolver.  Thus, recursive resolver
-   software such as BIND or modern versions of Unbound do not need to
-   add new functionality, but other recursive resolver software might
-   need to be able to talk to an authoritative server running on the
-   same host.  More recursive resolver software are expected add the
-   capabilities described in this document in the future.
+   software such as BIND or modern versions of common open source
+   recursive resolver software do not need to add new functionality, but
+   other recursive resolver software might need to be able to talk to an
+   authoritative server running on the same host.
 
    A different approach to solving some of the problems discussed in
    this document is described in [RFC8198].
@@ -219,17 +218,15 @@ Internet-Draft            Running Root on Local             January 2019
 
    [ Make the use cases explicit.  Be clearer that a real use case is
    folks who are worried that root server unavailabilty due to DDoS
-
-
-
-
-Kumari & Hoffman          Expires July 27, 2019                 [Page 4]
-
-Internet-Draft            Running Root on Local             January 2019
-
-
    against them is a reason some people would use the mechanisms here.
    ]
+
+
+
+Kumari & Hoffman          Expires July 28, 2019                 [Page 4]
+
+Internet-Draft              Root Server Local               January 2019
+
 
    [ Describe how slaving the root zone from root zone servers does not
    fully remove the reliance on the root servers being available.  ]
@@ -275,19 +272,17 @@ Internet-Draft            Running Root on Local             January 2019
 
    The operation of an authoritative server for the root in the system
    described here can be done separately from the operation of the
-
-
-
-
-Kumari & Hoffman          Expires July 27, 2019                 [Page 5]
-
-Internet-Draft            Running Root on Local             January 2019
-
-
    recursive resolver, or it might be part of the configuration of the
    recursive resolver system.
 
    The steps to set up the root zone are:
+
+
+
+Kumari & Hoffman          Expires July 28, 2019                 [Page 5]
+
+Internet-Draft              Root Server Local               January 2019
+
 
    1.  Retrieve a copy of the root zone.  (See Appendix A for some
        current locations of sources.)
@@ -332,18 +327,18 @@ Internet-Draft            Running Root on Local             January 2019
    published, the SOA for the root zone is the digital representation of
    the current date with a two-digit counter appended, and the SOA is
    changed every day even if the contents of the root zone are
-
-
-
-Kumari & Hoffman          Expires July 27, 2019                 [Page 6]
-
-Internet-Draft            Running Root on Local             January 2019
-
-
    unchanged.  For example, the SOA of the root zone on January 2, 2018
    was 2018010201.  A process can use this fact to create a check for
    the contents of the local root zone (using a program not specified in
    this document).
+
+
+
+
+Kumari & Hoffman          Expires July 28, 2019                 [Page 6]
+
+Internet-Draft              Root Server Local               January 2019
+
 
 4.  Using the Root Zone Server on the Same Host
 
@@ -389,17 +384,17 @@ Internet-Draft            Running Root on Local             January 2019
               specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
               November 1987, <https://www.rfc-editor.org/info/rfc1035>.
 
-
-
-Kumari & Hoffman          Expires July 27, 2019                 [Page 7]
-
-Internet-Draft            Running Root on Local             January 2019
-
-
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/info/rfc2119>.
+
+
+
+Kumari & Hoffman          Expires July 28, 2019                 [Page 7]
+
+Internet-Draft              Root Server Local               January 2019
+
 
    [RFC4033]  Arends, R., Austein, R., Larson, M., Massey, D., and S.
               Rose, "DNS Security Introduction and Requirements",
@@ -443,20 +438,20 @@ Appendix A.  Current Sources of the Root Zone
    server operators will turn off the AXFR capability on the servers
    listed above.  Using AXFR over TCP to addresses that are likely to be
    anycast (as the ones above are) may conceivably have transfer
-
-
-
-
-Kumari & Hoffman          Expires July 27, 2019                 [Page 8]
-
-Internet-Draft            Running Root on Local             January 2019
-
-
    problems due to anycast, but current practice shows that to be
    unlikely.
 
    To repeat the requirement from earlier in this document: if the
    contents of the zone cannot be refreshed before the expire time, the
+
+
+
+
+Kumari & Hoffman          Expires July 28, 2019                 [Page 8]
+
+Internet-Draft              Root Server Local               January 2019
+
+
    server MUST return a SERVFAIL error response for all queries until
    the zone can be successfully be set up again.
 
@@ -469,12 +464,6 @@ Appendix B.  Example Configurations of Common Implementations
    The IPv4 and IPv6 addresses in this section were checked recently by
    testing for AXFR over TCP from each address for the known single-
    letter names in the root-servers.net zone.
-
-   The examples here use a loopback address of 127.12.12.12, but typical
-   installations will use 127.0.0.1.  The different address is used in
-   order to emphasize that the root server does not need to be on the
-   device at the name "localhost" which is often locally served as
-   127.0.0.1.
 
 B.1.  Example Configuration: BIND 9.9
 
@@ -500,19 +489,24 @@ B.1.  Example Configuration: BIND 9.9
       server will cache all of the queries for the slaved zone, just as
       it would using the traditional "root hints" method.  Thus, as the
       zone in the other view or instance is refreshed or updated,
-
-
-
-Kumari & Hoffman          Expires July 27, 2019                 [Page 9]
-
-Internet-Draft            Running Root on Local             January 2019
-
-
       changed information will not appear in the recursive server until
       the TTL of the old record times out.  Currently, the TTL for DS
       and delegation NS records is two days.  When using the same view,
       all zone data in the recursive server will be updated as soon as
       it receives its copy of the zone.
+
+
+
+
+
+
+
+
+
+Kumari & Hoffman          Expires July 28, 2019                 [Page 9]
+
+Internet-Draft              Root Server Local               January 2019
+
 
    view root {
        match-destinations { 127.12.12.12; };
@@ -559,9 +553,15 @@ B.2.  Example Configuration: Unbound 1.8
 
 
 
-Kumari & Hoffman          Expires July 27, 2019                [Page 10]
+
+
+
+
+
+
+Kumari & Hoffman          Expires July 28, 2019                [Page 10]
 
-Internet-Draft            Running Root on Local             January 2019
+Internet-Draft              Root Server Local               January 2019
 
 
    auth-zone:
@@ -615,9 +615,9 @@ B.5.  Example Configuration: Microsoft Windows Server 2012
 
 
 
-Kumari & Hoffman          Expires July 27, 2019                [Page 11]
+Kumari & Hoffman          Expires July 28, 2019                [Page 11]
 
-Internet-Draft            Running Root on Local             January 2019
+Internet-Draft              Root Server Local               January 2019
 
 
    1.  Launch the DNS Manager GUI.  This can be done from the command
@@ -652,9 +652,8 @@ Acknowledgements
    The authors fully acknowledge that running a copy of the root zone on
    the loopback address is not a new concept, and that we have chatted
    with many people about that idea over time.  For example, Bill
-   Manning described a similar solution but to a very different problem
-   (intermittent connectivity, instead of constant but slow
-   connectivity) in his doctoral dissertation in 2013 [Manning2013].
+   Manning described a similar solution to the problems in his doctoral
+   dissertation in 2013 [Manning2013].
 
    Evan Hunt contributed greatly to the logic in the requirements.
    Other significant contributors include Wouter Wijngaards, Tony Hain,
@@ -663,7 +662,8 @@ Acknowledgements
    just a description of a way to operate a root zone on the same host,
    and not a recommendation to do so.
 
-Authors' Addresses
+   People who contributed to this update to RFC 7706 include: Florian
+   Obser, nusenu, [[ others go here ]].
 
 
 
@@ -671,10 +671,12 @@ Authors' Addresses
 
 
 
-Kumari & Hoffman          Expires July 27, 2019                [Page 12]
+Kumari & Hoffman          Expires July 28, 2019                [Page 12]
 
-Internet-Draft            Running Root on Local             January 2019
+Internet-Draft              Root Server Local               January 2019
 
+
+Authors' Addresses
 
    Warren Kumari
    Google
@@ -725,7 +727,5 @@ Internet-Draft            Running Root on Local             January 2019
 
 
 
-
-
-Kumari & Hoffman          Expires July 27, 2019                [Page 13]
+Kumari & Hoffman          Expires July 28, 2019                [Page 13]
 ```
