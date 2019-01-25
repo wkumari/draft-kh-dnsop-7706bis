@@ -76,7 +76,7 @@
       recursive resolver's cache, the resolver must send a query to a root
       server to get the information for that TLD, or to find out that the TLD
       does not exist. Research shows that the vast majority of queries going to the
-      root are for names that do not exist in the root zone, partially because the negative
+      root are for names that do not exist in the root zone because negative
       answers are sometimes cached for a much shorter period of time.</t>
 
       <t>Many of the queries from recursive resolvers to root servers get

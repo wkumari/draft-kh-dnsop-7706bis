@@ -8,7 +8,7 @@ Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Updates: 7706 (if approved)                                   P. Hoffman
 Intended status: Informational                                     ICANN
-Expires: July 28, 2019                                  January 24, 2019
+Expires: July 29, 2019                                  January 25, 2019
 
 
                Running a Root Server Local to a Resolver
@@ -55,7 +55,7 @@ Status of This Memo
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                 [Page 1]
+Kumari & Hoffman          Expires July 29, 2019                 [Page 1]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -63,7 +63,7 @@ Internet-Draft              Root Server Local               January 2019
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 28, 2019.
+   This Internet-Draft will expire on July 29, 2019.
 
 Copyright Notice
 
@@ -111,7 +111,7 @@ Table of Contents
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                 [Page 2]
+Kumari & Hoffman          Expires July 29, 2019                 [Page 2]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -119,8 +119,8 @@ Internet-Draft              Root Server Local               January 2019
    root server to get the information for that TLD, or to find out that
    the TLD does not exist.  Research shows that the vast majority of
    queries going to the root are for names that do not exist in the root
-   zone, partially because the negative answers are sometimes cached for
-   a much shorter period of time.
+   zone because negative answers are sometimes cached for a much shorter
+   period of time.
 
    Many of the queries from recursive resolvers to root servers get
    answers that are referrals to other servers.  Malicious third parties
@@ -167,7 +167,7 @@ Internet-Draft              Root Server Local               January 2019
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                 [Page 3]
+Kumari & Hoffman          Expires July 29, 2019                 [Page 3]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -223,7 +223,7 @@ Internet-Draft              Root Server Local               January 2019
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                 [Page 4]
+Kumari & Hoffman          Expires July 29, 2019                 [Page 4]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -279,7 +279,7 @@ Internet-Draft              Root Server Local               January 2019
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                 [Page 5]
+Kumari & Hoffman          Expires July 29, 2019                 [Page 5]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -335,7 +335,7 @@ Internet-Draft              Root Server Local               January 2019
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                 [Page 6]
+Kumari & Hoffman          Expires July 29, 2019                 [Page 6]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -391,7 +391,7 @@ Internet-Draft              Root Server Local               January 2019
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                 [Page 7]
+Kumari & Hoffman          Expires July 29, 2019                 [Page 7]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -447,7 +447,7 @@ Appendix A.  Current Sources of the Root Zone
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                 [Page 8]
+Kumari & Hoffman          Expires July 29, 2019                 [Page 8]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -503,7 +503,7 @@ B.1.  Example Configuration: BIND 9.9
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                 [Page 9]
+Kumari & Hoffman          Expires July 29, 2019                 [Page 9]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -559,7 +559,7 @@ B.2.  Example Configuration: Unbound 1.8
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                [Page 10]
+Kumari & Hoffman          Expires July 29, 2019                [Page 10]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -615,7 +615,7 @@ B.5.  Example Configuration: Microsoft Windows Server 2012
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                [Page 11]
+Kumari & Hoffman          Expires July 29, 2019                [Page 11]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -671,7 +671,7 @@ Acknowledgements
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                [Page 12]
+Kumari & Hoffman          Expires July 29, 2019                [Page 12]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -727,5 +727,5 @@ Authors' Addresses
 
 
 
-Kumari & Hoffman          Expires July 28, 2019                [Page 13]
+Kumari & Hoffman          Expires July 29, 2019                [Page 13]
 ```
