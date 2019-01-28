@@ -8,7 +8,7 @@ Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Updates: 7706 (if approved)                                   P. Hoffman
 Intended status: Informational                                     ICANN
-Expires: July 29, 2019                                  January 25, 2019
+Expires: August 1, 2019                                 January 28, 2019
 
 
                Running a Root Server Local to a Resolver
@@ -55,7 +55,7 @@ Status of This Memo
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                 [Page 1]
+Kumari & Hoffman         Expires August 1, 2019                 [Page 1]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -63,7 +63,7 @@ Internet-Draft              Root Server Local               January 2019
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 29, 2019.
+   This Internet-Draft will expire on August 1, 2019.
 
 Copyright Notice
 
@@ -111,7 +111,7 @@ Table of Contents
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                 [Page 2]
+Kumari & Hoffman         Expires August 1, 2019                 [Page 2]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -167,7 +167,7 @@ Internet-Draft              Root Server Local               January 2019
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                 [Page 3]
+Kumari & Hoffman         Expires August 1, 2019                 [Page 3]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -223,7 +223,7 @@ Internet-Draft              Root Server Local               January 2019
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                 [Page 4]
+Kumari & Hoffman         Expires August 1, 2019                 [Page 4]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -279,7 +279,7 @@ Internet-Draft              Root Server Local               January 2019
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                 [Page 5]
+Kumari & Hoffman         Expires August 1, 2019                 [Page 5]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -335,7 +335,7 @@ Internet-Draft              Root Server Local               January 2019
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                 [Page 6]
+Kumari & Hoffman         Expires August 1, 2019                 [Page 6]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -391,7 +391,7 @@ Internet-Draft              Root Server Local               January 2019
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                 [Page 7]
+Kumari & Hoffman         Expires August 1, 2019                 [Page 7]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -447,7 +447,7 @@ Appendix A.  Current Sources of the Root Zone
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                 [Page 8]
+Kumari & Hoffman         Expires August 1, 2019                 [Page 8]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -503,7 +503,7 @@ B.1.  Example Configuration: BIND 9.9
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                 [Page 9]
+Kumari & Hoffman         Expires August 1, 2019                 [Page 9]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -515,7 +515,7 @@ Internet-Draft              Root Server Local               January 2019
            file "rootzone.db";
            notify no;
            masters {
-               192.228.79.201;       # b.root-servers.net
+               199.9.14.201;         # b.root-servers.net
                192.33.4.12;          # c.root-servers.net
                199.7.91.13;          # d.root-servers.net
                192.5.5.241;          # f.root-servers.net
@@ -523,7 +523,7 @@ Internet-Draft              Root Server Local               January 2019
                193.0.14.129;         # k.root-servers.net
                192.0.47.132;         # xfr.cjr.dns.icann.org
                192.0.32.132;         # xfr.lax.dns.icann.org
-               2001:500:84::b;       # b.root-servers.net
+               2001:500:200::b;      # b.root-servers.net
                2001:500:2::c;        # c.root-servers.net
                2001:500:2d::d;       # d.root-servers.net
                2001:500:2f::f;       # f.root-servers.net
@@ -559,14 +559,14 @@ B.2.  Example Configuration: Unbound 1.8
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                [Page 10]
+Kumari & Hoffman         Expires August 1, 2019                [Page 10]
 
 Internet-Draft              Root Server Local               January 2019
 
 
    auth-zone:
        name: "."
-       master: 192.228.79.201       # b.root-servers.net
+       master: 199.9.14.201         # b.root-servers.net
        master: 192.33.4.12          # c.root-servers.net
        master: 199.7.91.13          # d.root-servers.net
        master: 192.5.5.241          # f.root-servers.net
@@ -574,7 +574,7 @@ Internet-Draft              Root Server Local               January 2019
        master: 193.0.14.129         # k.root-servers.net
        master: 192.0.47.132         # xfr.cjr.dns.icann.org
        master: 192.0.32.132         # xfr.lax.dns.icann.org
-       master: 2001:500:84::b       # b.root-servers.net
+       master: 2001:500:200::b      # b.root-servers.net
        master: 2001:500:2::c        # c.root-servers.net
        master: 2001:500:2d::d       # d.root-servers.net
        master: 2001:500:2f::f       # f.root-servers.net
@@ -615,7 +615,7 @@ B.5.  Example Configuration: Microsoft Windows Server 2012
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                [Page 11]
+Kumari & Hoffman         Expires August 1, 2019                [Page 11]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -663,7 +663,7 @@ Acknowledgements
    and not a recommendation to do so.
 
    People who contributed to this update to RFC 7706 include: Florian
-   Obser, nusenu, [[ others go here ]].
+   Obser, nusenu, Wouter Wijngaards, [[ others go here ]].
 
 
 
@@ -671,7 +671,7 @@ Acknowledgements
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                [Page 12]
+Kumari & Hoffman         Expires August 1, 2019                [Page 12]
 
 Internet-Draft              Root Server Local               January 2019
 
@@ -727,5 +727,5 @@ Authors' Addresses
 
 
 
-Kumari & Hoffman          Expires July 29, 2019                [Page 13]
+Kumari & Hoffman         Expires August 1, 2019                [Page 13]
 ```
