@@ -93,7 +93,9 @@
       resolver for good queries on TLDs, because the TTL for most TLDs is
       usually long-lived (on the order of a day or two) and is thus usually
       already in the cache of the recursive resolver; the same is true for the
-      TTL for negative answers from the root servers.</t>
+      TTL for negative answers from the root servers. (Although the primary
+      goal of the design is for serving the root zone, the method can be
+      used for any zone.)</t>
 
       <t>This document describes a method for the operator of a recursive
       resolver to have a complete root zone locally, and to hide these queries
