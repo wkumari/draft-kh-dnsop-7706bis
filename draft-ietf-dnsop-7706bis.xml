@@ -516,17 +516,17 @@ zone "." {
         <figure>
           <artwork><![CDATA[
 auth-zone:
-	name: "."
-	master: "b.root-servers.net"
-	master: "c.root-servers.net"
-	master: "d.root-servers.net"
-	master: "f.root-servers.net"
-	master: "g.root-servers.net"
-	master: "k.root-servers.net"
+    name: "."
+    master: "b.root-servers.net"
+    master: "c.root-servers.net"
+    master: "d.root-servers.net"
+    master: "f.root-servers.net"
+    master: "g.root-servers.net"
+    master: "k.root-servers.net"
         fallback-enabled: yes
-  	for-downstream: no
-  	for-upstream: yes
- 	zonefile: "root.zone"
+    for-downstream: no
+    for-upstream: yes
+    zonefile: "root.zone"
 ]]></artwork>
         </figure>
 

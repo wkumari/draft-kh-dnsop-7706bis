@@ -8,7 +8,7 @@ Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Updates: 7706 (if approved)                                   P. Hoffman
 Intended status: Informational                                     ICANN
-Expires: September 5, 2019                                 March 4, 2019
+Expires: September 9, 2019                                 March 8, 2019
 
 
                Running a Root Server Local to a Resolver
@@ -55,7 +55,7 @@ Status of This Memo
 
 
 
-Kumari & Hoffman        Expires September 5, 2019               [Page 1]
+Kumari & Hoffman        Expires September 9, 2019               [Page 1]
 
 Internet-Draft              Root Server Local                 March 2019
 
@@ -63,7 +63,7 @@ Internet-Draft              Root Server Local                 March 2019
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 5, 2019.
+   This Internet-Draft will expire on September 9, 2019.
 
 Copyright Notice
 
@@ -87,7 +87,7 @@ Table of Contents
      1.2.  Requirements Notation . . . . . . . . . . . . . . . . . .   5
    2.  Requirements  . . . . . . . . . . . . . . . . . . . . . . . .   5
    3.  Operation of the Root Zone on the Local Server  . . . . . . .   5
-   4.  Using the Root Zone Server on the Same Host . . . . . . . . .   7
+   4.  Using the Root Zone Server on the Same Host . . . . . . . . .   6
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .   7
    6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
      6.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
@@ -111,7 +111,7 @@ Table of Contents
 
 
 
-Kumari & Hoffman        Expires September 5, 2019               [Page 2]
+Kumari & Hoffman        Expires September 9, 2019               [Page 2]
 
 Internet-Draft              Root Server Local                 March 2019
 
@@ -135,7 +135,9 @@ Internet-Draft              Root Server Local                 March 2019
    resolver for good queries on TLDs, because the TTL for most TLDs is
    usually long-lived (on the order of a day or two) and is thus usually
    already in the cache of the recursive resolver; the same is true for
-   the TTL for negative answers from the root servers.
+   the TTL for negative answers from the root servers.  (Although the
+   primary goal of the design is for serving the root zone, the method
+   can be used for any zone.)
 
    This document describes a method for the operator of a recursive
    resolver to have a complete root zone locally, and to hide these
@@ -162,15 +164,16 @@ Internet-Draft              Root Server Local                 March 2019
    serving of the root zone for an individual resolver is a reasonable
    practice.  The advantages listed above do not come free: if this new
    system does not work correctly, users can get bad data, or the entire
-   recursive resolution system might fail in ways that are hard to
-   diagnose.
 
 
 
-Kumari & Hoffman        Expires September 5, 2019               [Page 3]
+Kumari & Hoffman        Expires September 9, 2019               [Page 3]
 
 Internet-Draft              Root Server Local                 March 2019
 
+
+   recursive resolution system might fail in ways that are hard to
+   diagnose.
 
    This design uses authoritative name server software running on the
    same machine as the recursive resolver.  Thus, recursive resolver
@@ -208,26 +211,8 @@ Internet-Draft              Root Server Local                 March 2019
    draft, it is also the list of changes that we will make in future
    versions of the daft. ]
 
-   [ Give a clearer comparison of software that allows slaving the root
-   zone in the software (such as BIND or modern Unbound) versus resolver
-   software that requires a local slaved root zone (older Unbound). ]
-
-   [ Add a description of Knot's cache-prefilling as way to get the data
-   without having a local authoritative. ]
-
-   [ Add discussion of BIND slaving the root zone in the same view
-   instead of using different views. ]
-
    [ Make the use cases explicit.  Be clearer that a real use case is
    folks who are worried that root server unavailabilty due to DDoS
-
-
-
-Kumari & Hoffman        Expires September 5, 2019               [Page 4]
-
-Internet-Draft              Root Server Local                 March 2019
-
-
    against them is a reason some people would use the mechanisms here.
    ]
 
@@ -235,6 +220,13 @@ Internet-Draft              Root Server Local                 March 2019
    fully remove the reliance on the root servers being available.  ]
 
    [ Other new topics might go here. ]
+
+
+
+Kumari & Hoffman        Expires September 9, 2019               [Page 4]
+
+Internet-Draft              Root Server Local                 March 2019
+
 
 1.2.  Requirements Notation
 
@@ -276,14 +268,6 @@ Internet-Draft              Root Server Local                 March 2019
    recursive resolver, or it might be part of the configuration of the
    recursive resolver system.
 
-
-
-
-Kumari & Hoffman        Expires September 5, 2019               [Page 5]
-
-Internet-Draft              Root Server Local                 March 2019
-
-
    The steps to set up the root zone are:
 
    1.  Retrieve a copy of the root zone.  (See Appendix A for some
@@ -292,6 +276,14 @@ Internet-Draft              Root Server Local                 March 2019
    2.  Start the authoritative server with the root zone on an address
        on the host that is not in use.  For IPv4, this could be
        127.0.0.1, but if that address is in use, any address in 127/8 is
+
+
+
+Kumari & Hoffman        Expires September 9, 2019               [Page 5]
+
+Internet-Draft              Root Server Local                 March 2019
+
+
        acceptable.  For IPv6, this would be ::1.  It can also be a
        publicly-visible address on the host, but only if the
        authoritative server software allows restricting the addresses
@@ -331,15 +323,6 @@ Internet-Draft              Root Server Local                 March 2019
    changed every day even if the contents of the root zone are
    unchanged.  For example, the SOA of the root zone on January 2, 2018
    was 2018010201.  A process can use this fact to create a check for
-
-
-
-
-Kumari & Hoffman        Expires September 5, 2019               [Page 6]
-
-Internet-Draft              Root Server Local                 March 2019
-
-
    the contents of the local root zone (using a program not specified in
    this document).
 
@@ -349,6 +332,13 @@ Internet-Draft              Root Server Local                 March 2019
    as described in Section 3 simply specifies the local address as the
    place to look when it is looking for information from the root.  All
    responses from the root server MUST be validated using DNSSEC.
+
+
+
+Kumari & Hoffman        Expires September 9, 2019               [Page 6]
+
+Internet-Draft              Root Server Local                 March 2019
+
 
    Note that using this simplistic configuration will cause the
    recursive resolver to fail if the local root zone server fails.  A
@@ -387,15 +377,6 @@ Internet-Draft              Root Server Local                 March 2019
               specification", STD 13, RFC 1035, DOI 10.17487/RFC1035,
               November 1987, <https://www.rfc-editor.org/info/rfc1035>.
 
-
-
-
-
-Kumari & Hoffman        Expires September 5, 2019               [Page 7]
-
-Internet-Draft              Root Server Local                 March 2019
-
-
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -405,6 +386,15 @@ Internet-Draft              Root Server Local                 March 2019
               Rose, "DNS Security Introduction and Requirements",
               RFC 4033, DOI 10.17487/RFC4033, March 2005,
               <https://www.rfc-editor.org/info/rfc4033>.
+
+
+
+
+
+Kumari & Hoffman        Expires September 9, 2019               [Page 7]
+
+Internet-Draft              Root Server Local                 March 2019
+
 
 6.2.  Informative References
 
@@ -443,15 +433,6 @@ Appendix A.  Current Sources of the Root Zone
    server operators will turn off the AXFR capability on the servers
    listed above.  Using AXFR over TCP to addresses that are likely to be
    anycast (as the ones above are) may conceivably have transfer
-
-
-
-
-Kumari & Hoffman        Expires September 5, 2019               [Page 8]
-
-Internet-Draft              Root Server Local                 March 2019
-
-
    problems due to anycast, but current practice shows that to be
    unlikely.
 
@@ -459,6 +440,17 @@ Internet-Draft              Root Server Local                 March 2019
    contents of the zone cannot be refreshed before the expire time, the
    server MUST return a SERVFAIL error response for all queries until
    the zone can be successfully be set up again.
+
+
+
+
+
+
+
+Kumari & Hoffman        Expires September 9, 2019               [Page 8]
+
+Internet-Draft              Root Server Local                 March 2019
+
 
 Appendix B.  Example Configurations of Common Implementations
 
@@ -500,18 +492,21 @@ B.1.  Example Configuration: BIND 9.12
       it would using the traditional "root hints" method.  Thus, as the
       zone in the other view or instance is refreshed or updated,
       changed information will not appear in the recursive server until
-
-
-
-Kumari & Hoffman        Expires September 5, 2019               [Page 9]
-
-Internet-Draft              Root Server Local                 March 2019
-
-
       the TTL of the old record times out.  Currently, the TTL for DS
       and delegation NS records is two days.  When using the same view,
       all zone data in the recursive server will be updated as soon as
       it receives its copy of the zone.
+
+
+
+
+
+
+
+Kumari & Hoffman        Expires September 9, 2019               [Page 9]
+
+Internet-Draft              Root Server Local                 March 2019
+
 
    view root {
        match-destinations { 127.12.12.12; };
@@ -559,7 +554,12 @@ B.2.  Example Configuration: Unbound 1.8
 
 
 
-Kumari & Hoffman        Expires September 5, 2019              [Page 10]
+
+
+
+
+
+Kumari & Hoffman        Expires September 9, 2019              [Page 10]
 
 Internet-Draft              Root Server Local                 March 2019
 
@@ -615,23 +615,23 @@ B.4.  Example Configuration: Unbound 1.9
 
 
 
-Kumari & Hoffman        Expires September 5, 2019              [Page 11]
+Kumari & Hoffman        Expires September 9, 2019              [Page 11]
 
 Internet-Draft              Root Server Local                 March 2019
 
 
    auth-zone:
-           name: "."
-           master: "b.root-servers.net"
-           master: "c.root-servers.net"
-           master: "d.root-servers.net"
-           master: "f.root-servers.net"
-           master: "g.root-servers.net"
-           master: "k.root-servers.net"
+       name: "."
+       master: "b.root-servers.net"
+       master: "c.root-servers.net"
+       master: "d.root-servers.net"
+       master: "f.root-servers.net"
+       master: "g.root-servers.net"
+       master: "k.root-servers.net"
            fallback-enabled: yes
-           for-downstream: no
-           for-upstream: yes
-           zonefile: "root.zone"
+       for-downstream: no
+       for-upstream: yes
+       zonefile: "root.zone"
 
 B.5.  Example Configuration: Knot Resolver
 
@@ -671,7 +671,7 @@ B.6.  Example Configuration: Microsoft Windows Server 2012
 
 
 
-Kumari & Hoffman        Expires September 5, 2019              [Page 12]
+Kumari & Hoffman        Expires September 9, 2019              [Page 12]
 
 Internet-Draft              Root Server Local                 March 2019
 
@@ -727,5 +727,5 @@ Authors' Addresses
 
 
 
-Kumari & Hoffman        Expires September 5, 2019              [Page 13]
+Kumari & Hoffman        Expires September 9, 2019              [Page 13]
 ```
