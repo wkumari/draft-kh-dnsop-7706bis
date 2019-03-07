@@ -149,22 +149,13 @@
         switch to using the normal (remote) root servers if the local root
         server fails.</t>
 
+        <t>Refreshed the list of where one can get copies of the root zone.</t>
+
+        <t>Added examples of other resolvers and updated the existing examples.</t>
+
         <t>[ This section will list all the changes from RFC 7706. For this
         draft, it is also the list of changes that we will make in future
         versions of the daft. ]</t>
-
-        <t>[ Give a clearer comparison of software that allows slaving the
-        root zone in the software (such as BIND or modern Unbound) versus
-        resolver software that requires a local slaved root zone (older
-        Unbound). ]</t>
-
-        <t>[ Add a description of Knot's cache-prefilling as way to get the
-        data without having a local authoritative. ]</t>
-
-        <t>[ Add examples of other resolvers such as PowerDNS Recusor. ]</t>
-
-        <t>[ Add discussion of BIND slaving the root zone in the same view
-        instead of using different views. ]</t>
 
         <t>[ Make the use cases explicit. Be clearer that a real use case is
         folks who are worried that root server unavailabilty due to DDoS
@@ -175,7 +166,6 @@
         not fully remove the reliance on the root servers being available.
         ]</t>
 
-        <t>[ Refresh list of where one can get copies of the root zone. ]</t>
 
         <t>[ Other new topics might go here. ]</t>
       </section>
@@ -381,22 +371,27 @@
              title="Example Configurations of Common Implementations">
       <t>This section shows fragments of configurations for some popular
       recursive server software that is believed to correctly implement the
-      requirements given in this document.</t>
+      requirements given in this document. The examples have been updated
+      since the publication of RFC 7706.</t>
 
       <t>The IPv4 and IPv6 addresses in this section were checked recently by
       testing for AXFR over TCP from each address for the known single-letter
       names in the root-servers.net zone.</t>
 
-      <section title="Example Configuration: BIND 9.9">
-        <t>BIND acts both as a recursive resolver and an authoritative server.
+      <section title="Example Configuration: BIND 9.12">
+        <t>BIND 9.12 acts both as a recursive resolver and an authoritative server.
         Because of this, there is "fate-sharing" between the two servers in
         the following configuration. That is, if the root server dies, it is
         likely that all of BIND is dead.</t>
+        
+        <t>Note that a future version of BIND will support a much more robust
+        method for creating a local mirror of the root or other zones; see
+        <xref target="bind-9-14"/>.</t>
 
         <t>Using this configuration, queries for information in the root zone
         are returned with the AA bit not set.</t>
 
-        <t>When slaving a zone, BIND will treat zone data differently if the
+        <t>When slaving a zone, BIND 9.12 will treat zone data differently if the
         zone is slaved into a separate view (or a separate instance of the
         software) versus slaved into the same view or instance that is also
         performing the recursion.</t>
@@ -491,9 +486,48 @@ auth-zone:
         </figure>
       </section>
 
-      <section title="Example Configuration: Unbound">
-        <t>[ Add an example of modern Unbound, or point to the Unbound
-        documentation where it exists ]</t>
+      <section title="Example Configuration: BIND 9.14" anchor="bind-9-14">
+        <t>BIND 9.14 (which, at the time of publication of this document is
+        a future release) can set up a local mirror of the root zone with a
+        small configuration option:</t>
+
+        <figure>
+          <artwork><![CDATA[
+zone "." {
+    type mirror;
+};
+]]></artwork>
+        </figure>
+        <t>The simple "type mirror" configuration for the root zone works
+        for the root zone because a default list of primary servers for the
+        IANA root zone is built into BIND 9.14. In order to set up mirroring
+        of any other zone, an explicit list of primary servers needs to be
+        provided.</t>
+        
+        <t>See the documentation for BIND 9.14 (when it is released) for more detail
+        about how to use this simplified configuration</t>
+      </section>
+
+      <section title="Example Configuration: Unbound 1.9">
+        <t>Recent versions of Unbound have a "auth-zone" feature that allows local
+        mirroring of the root zone. Configuration looks like:</t>
+        <figure>
+          <artwork><![CDATA[
+auth-zone:
+	name: "."
+	master: "b.root-servers.net"
+	master: "c.root-servers.net"
+	master: "d.root-servers.net"
+	master: "f.root-servers.net"
+	master: "g.root-servers.net"
+	master: "k.root-servers.net"
+        fallback-enabled: yes
+  	for-downstream: no
+  	for-upstream: yes
+ 	zonefile: "root.zone"
+]]></artwork>
+        </figure>
+
       </section>
 
       <section title="Example Configuration: Knot Resolver">
