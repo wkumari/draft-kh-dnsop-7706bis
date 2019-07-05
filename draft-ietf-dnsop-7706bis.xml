@@ -369,6 +369,19 @@
       contents of the zone cannot be refreshed before the expire time, the
       server MUST return a SERVFAIL error response for all queries until the
       zone can be successfully be set up again.</t>
+      
+      <section title="Root Zone Services">
+      
+      <t>At the time that this document is published, there is one root zone service
+      that is active, and one that has been announced as in the planning stages.
+      This section describes all known active services.</t>
+      
+      <t>LocalRoot (&lt;https://localroot.isi.edu/&gt;) is an experimental
+      service that embodies many of the ideas in this document. It
+      distributes the root zone by AXFR, and also offers DNS NOTIFY messages
+      when the LocalRoot system sees that the root zone has changed.</t>
+      
+      </section>
     </section>
 
     <section anchor="examples"
