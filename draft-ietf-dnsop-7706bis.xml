@@ -46,7 +46,7 @@
 
     <abstract>
       <t>Some DNS recursive resolvers have longer-than-desired round-trip
-      times to the closest DNS root server. Some DNS recursive resolver
+      times to the closest DNS root server such as during a network attack. Some DNS recursive resolver
       operators want to prevent snooping of requests sent to DNS root servers
       by third parties. Such resolvers can greatly decrease the round-trip
       time and prevent observation of requests by running a copy of the full
