@@ -50,7 +50,7 @@
       operators want to prevent snooping of requests sent to DNS root servers
       by third parties. Such resolvers can greatly decrease the round-trip
       time and prevent observation of requests by running a copy of the full
-      root zone on the same server, such as on a loopback address. This
+      root zone on the same server, such as on a loopback address or in the resolver software. This
       document shows how to start and maintain such a copy of the root zone
       that does not pose a threat to other users of the DNS, at the cost of
       adding some operational fragility for the operator.</t>
@@ -94,18 +94,18 @@
       used for any zone.)</t>
 
       <t>This document describes a method for the operator of a recursive
-      resolver to have a complete root zone locally, and to hide these queries
+      resolver to have a complete root zone locally, and to hide queries for the root zone
       from outsiders. The basic idea is to create an up-to-date root zone
-      server on the same host as the recursive server, and use that server
+      service on the same host as the recursive server, and use that service
       when the recursive resolver looks up root information. The recursive
-      resolver validates all responses from the root server on the same host,
+      resolver validates all responses from the root service on the same host,
       just as it would all responses from a remote root server.</t>
 
-      <t>This design explicitly only allows the new root zone server to be run
+      <t>This design explicitly only allows the new root zone service to be run
       on the same server as the recursive resolver, in order to prevent the
       server from serving authoritative answers to any other system.
-      Specifically, the root server on the local system MUST be configured to
-      only answer queries from the resolvers on the same host, and MUST NOT
+      Specifically, the root service on the local system MUST be configured to
+      only answer queries from resolvers on the same host, and MUST NOT
       answer queries from any other resolver.</t>
 
       <t>At the time that RFC 7706 was published, it was considered
@@ -120,10 +120,11 @@
       recursive resolution system might fail in ways that are hard to
       diagnose.</t>
 
-      <t>This design uses authoritative name server software running on the
-      same machine as the recursive resolver. Thus, recursive resolver
-      software such as BIND or modern versions of common open source recursive
-      resolver software do not need to add new functionality, but other
+      <t>This design uses authoritative service running on the
+      same machine as the recursive resolver.
+      Common open source recursive
+      resolver software does not need to add new functionality to
+      act as an authoritative server for some zones, but other
       recursive resolver software might need to be able to talk to an
       authoritative server running on the same host.</t>
 
@@ -131,13 +132,13 @@
       this document is described in <xref target="RFC8198"/>.</t>
 
       <section title="Updates from RFC 7706">
-        <t>RFC 7706 explicitly required that the root server instance be run
+        <t>RFC 7706 explicitly required that a root server instance be run
         on the loopback interface of the host running the validating resolver.
         However, RFC 7706 also had examples of how to set up common software
         that did not use the loopback interface. Thus, this document loosens
-        the restriction on the interface but keeps the requirement that only
-        systems running on that single host be able to query that root server
-        instance.</t>
+        the restriction on using the loopback interface but keeps the requirement that only
+        systems running on that single host be able to query that authoritatve root
+        service.</t>
 
         <t>Removed the prohibition on distribution of recursive DNS servers
         including configurations for this design because some already do, and
@@ -188,12 +189,16 @@
           <t>The system MUST be able to retrieve a copy of the entire root
           zone (including all DNSSEC-related records).</t>
 
-          <t>The system MUST be able to run an authoritative server for the
-          root zone on the same host. The root server instance MUST only
+          <t>The system MUST be able to run an authoritative service for the
+          root zone on the same host. The authoritative root service MUST only
           respond to queries from the same host. One way to assure not
-          responding to queries from other hosts is to make the address of the
-          authoritative server one of the loopback addresses (that is, an
-          address in the range 127/8 for IPv4 or ::1 in IPv6).</t>
+          responding to queries from other hosts is to run an authoritative
+          server for the root that responds only on
+          one of the loopback addresses (that is, an
+          address in the range 127/8 for IPv4 or ::1 in IPv6).
+          Another method to have the resolver software also act as an
+          authoritative server for the root zone, but only for answering
+          queries from itself.</t>
         </list></t>
 
       <t>A corollary of the above list is that authoritative data in the root
@@ -218,14 +223,9 @@
           <t>Retrieve a copy of the root zone. (See <xref target="sources"/>
           for some current locations of sources.)</t>
 
-          <t>Start the authoritative server with the root zone on an address
-          on the host that is not in use. For IPv4, this could be 127.0.0.1,
-          but if that address is in use, any address in 127/8 is acceptable.
-          For IPv6, this would be ::1. It can also be a publicly-visible
-          address on the host, but only if the authoritative server software
-          allows restricting the addresses that can access the authoritative
-          server, and the software is configured to only allow access from
-          addresses on this single host.</t>
+          <t>Start the authoritative service for the root zone in a manner that
+          prevents any system other than a recursive resolver on the same host
+          from accessing it.</t>
         </list></t>
 
       <t>The contents of the root zone MUST be refreshed using the timers from
@@ -235,14 +235,22 @@
       servers because those servers are updated when triggered by NOTIFY
       messages.</t>
 
-      <t>If the contents of the root zone cannot be refreshed before the
-      expire time in the SOA, the local root server MUST return a SERVFAIL
+      <t>In a system that is using a local authoritative
+      server for the root zone.
+      if the contents of the root zone cannot be refreshed before the
+      expire time in the SOA,
+      the local root server MUST return a SERVFAIL
       error response for all queries sent to it until the zone can be
       successfully be set up again. Because this would cause a recursive
       resolver on the same host that is relying on this root server to also
-      fail, a resolver might be configured to immediatly switch to using other
+      fail, a resolver SHOULD be configured to immediatly switch to using other
       (non-local) root servers if the resolver receives a SERVFAIL response
       from a local root server.</t>
+
+      <t>In a resolver that is using an internal service for the root zone.
+      if the contents of the root zone cannot be refreshed before the
+      expire time in the SOA, the resolver SHOULD immediatly switch to
+      using non-local root servers.</t>
 
       <t>In the event that refreshing the contents of the root zone fails, the
       results can be disastrous. For example, sometimes all the NS records for
@@ -259,31 +267,9 @@
       root zone is the digital representation of the current date with a
       two-digit counter appended, and the SOA is changed every day even if the
       contents of the root zone are unchanged. For example, the SOA of the
-      root zone on January 2, 2018 was 2018010201. A process can use this fact
+      root zone on January 2, 2019 was 2019010201. A process can use this fact
       to create a check for the contents of the local root zone (using a
       program not specified in this document).</t>
-    </section>
-
-    <section title="Using the Root Zone Server on the Same Host">
-      <t>A recursive resolver that wants to use a root zone server operating
-      as described in <xref target="zoneop"/> simply specifies the local
-      address as the place to look when it is looking for information from the
-      root. All responses from the root server MUST be validated using
-      DNSSEC.</t>
-
-      <t>Note that using this simplistic configuration will cause the
-      recursive resolver to fail if the local root zone server fails. A more
-      robust configuration would cause the resolver to start using the normal
-      remote root servers when the local root server fails (such as if it does
-      not respond or gives SERVFAIL responses).</t>
-
-      <t>See <xref target="examples"/> for more discussion of this for
-      specific software.</t>
-
-      <t>To test the proper operation of the recursive resolver with the local
-      root server, use a DNS client to send a query for the SOA of the root to
-      the recursive server. Make sure the response that comes back has the AA
-      bit in the message header set to 0.</t>
     </section>
 
     <section anchor="security" title="Security Considerations">
