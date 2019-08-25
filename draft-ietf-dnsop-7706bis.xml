@@ -58,10 +58,6 @@
       <t>This draft will update RFC 7706. See Section 1.1 for a list of topics
       that will be added in the update.</t>
 
-      <t>[ Ed note: Text inside square brackets ([]) is additional background
-      information, answers to freqently asked questions, general musings, etc.
-      They will be removed before publication.]</t>
-
       <t>[ This document is being collaborated on in Github at:
       https://github.com/wkumari/draft-kh-dnsop-7706bis. The most recent
       version of the document, open issues, and so on should all be available
@@ -169,7 +165,6 @@
         ]</t>
 
 
-        <t>[ Other new topics might go here. ]</t>
       </section>
 
       <section title="Requirements Notation">
