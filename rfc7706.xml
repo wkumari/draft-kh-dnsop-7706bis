@@ -44,6 +44,9 @@
       how to start and maintain such a copy of the root zone that does not
       pose a threat to other users of the DNS, at the cost of adding some
       operational fragility for the operator.</t>
+      <t>This document updates RFC 7706 by changing the use cases for running a
+      local root service. This is done to make it more consistent with the
+      reasons provided by operators.</t>
     </abstract>
   </front>
 
