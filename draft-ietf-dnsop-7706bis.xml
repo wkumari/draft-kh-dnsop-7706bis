@@ -235,13 +235,13 @@
       error response for all queries sent to it until the zone can be
       successfully be set up again. Because this would cause the recursive
       resolver to also
-      fail, the resolver SHOULD be configured to immediatly switch to using other
+      fail, the resolver MUST immediatly switch to using other
       (non-local) root servers if the resolver receives a SERVFAIL response
       from a local root server.</t>
 
       <t>In a resolver that is using an internal service for the root zone.
       if the contents of the root zone cannot be refreshed before the
-      expire time in the SOA, the resolver SHOULD immediatly switch to
+      expire time in the SOA, the resolver MUST immediatly switch to
       using non-local root servers.</t>
 
       <t>In the event that refreshing the contents of the root zone fails, the
