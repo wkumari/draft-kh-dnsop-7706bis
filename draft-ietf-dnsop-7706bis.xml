@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="US-ASCII"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
 <!ENTITY rfc1035 PUBLIC "" "reference.RFC.1035.xml">
-<!ENTITY rfc2119 PUBLIC "" ".//reference.RFC.2119.xml">
+<!ENTITY rfc2119 PUBLIC "" "../reference.RFC.2119.xml">
 <!ENTITY rfc4033 PUBLIC "" "reference.RFC.4033.xml">
+<!ENTITY rfc8174 PUBLIC "" "reference.RFC.8174.xml">
 <!ENTITY rfc8198 PUBLIC "" "reference.RFC.8198.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
@@ -47,12 +48,12 @@
     <abstract>
       <t>Some DNS recursive resolvers have longer-than-desired round-trip
       times to the closest DNS root server such as during a network attack. Some DNS recursive resolver
-      operators want to prevent snooping of requests sent to DNS root servers
-      by third parties. Such resolvers can greatly decrease the round-trip
-      time and prevent observation of requests by running a copy of the full
+      operators want to prevent snooping by third parties of requests sent to DNS root servers.
+      Such resolvers can greatly decrease the round-trip
+      time and prevent observation of requests by serving a copy of the full
       root zone on the same server, such as on a loopback address or in the resolver software. This
       document shows how to start and maintain such a copy of the root zone
-      that does not pose a threat to other users of the DNS, at the cost of
+      that does not cause problems for other users of the DNS, at the cost of
       adding some operational fragility for the operator.</t>
 
       <t>[ This document is being collaborated on in Github at:
@@ -66,7 +67,7 @@
     <section anchor="intro" title="Introduction">
       <t>DNS recursive resolvers have to provide answers to all queries from
       their customers, even those for domain names that do not exist. For each
-      queried name that has a top-level domain (TLD) that is not in the
+      queried name that is within a top-level domain (TLD) that is not in the
       recursive resolver's cache, the resolver must send a query to a root
       server to get the information for that TLD, or to find out that the TLD
       does not exist. Research shows that the vast majority of queries going
@@ -160,8 +161,10 @@
       <section title="Requirements Notation">
         <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
         "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-        document are to be interpreted as described in <xref
-        target="RFC2119"/>.</t>
+        document are to be interpreted as described in BCP 14
+        <xref target="RFC2119"/> <xref target="RFC8174"/>
+        when, and only when, they appear in all capitals, as shown here.</t>
+
       </section>
     </section>
 
@@ -169,7 +172,7 @@
       <t>In order to implement the mechanism described in this document:</t>
 
       <t><list style="symbols">
-          <t>The system MUST be able to validate a zone with DNSSEC <xref
+          <t>The system MUST be able to validate every signed record in a zone with DNSSEC <xref
           target="RFC4033"/>.</t>
 
           <t>The system MUST have an up-to-date copy of the key used to sign
@@ -230,9 +233,9 @@
       expire time in the SOA,
       the local root server MUST return a SERVFAIL
       error response for all queries sent to it until the zone can be
-      successfully be set up again. Because this would cause a recursive
-      resolver on the same host that is relying on this root server to also
-      fail, a resolver SHOULD be configured to immediatly switch to using other
+      successfully be set up again. Because this would cause the recursive
+      resolver to also
+      fail, the resolver SHOULD be configured to immediatly switch to using other
       (non-local) root servers if the resolver receives a SERVFAIL response
       from a local root server.</t>
 
@@ -251,7 +254,7 @@
       automated method to check that the contents of the local root zone are
       being refreshed; this might be part of the resolver software. One way to
       do this is to have a separate process that periodically checks the SOA
-      of the root zone from the local root zone and makes sure that it is
+      of the local root zone and makes sure that it is
       changing. At the time that this document is published, the SOA for the
       root zone is the digital representation of the current date with a
       two-digit counter appended, and the SOA is changed every day even if the
@@ -286,6 +289,8 @@
       <?rfc include='reference.RFC.2119'?>
 
       <?rfc include='reference.RFC.4033'?>
+
+      <?rfc include='reference.RFC.8174'?>
     </references>
 
     <references title="Informative References">
@@ -334,11 +339,6 @@
       Using AXFR over TCP to addresses that are likely to be anycast (as the
       ones above are) may conceivably have transfer problems due to anycast,
       but current practice shows that to be unlikely.</t>
-
-      <t>To repeat the requirement from earlier in this document: if the
-      contents of the zone cannot be refreshed before the expire time, the
-      server MUST return a SERVFAIL error response for all queries until the
-      zone can be successfully be set up again.</t>
       
       <section title="Root Zone Services">
       
@@ -578,7 +578,7 @@ auth-zone:
       recommendation to do so.</t>
 
       <t>People who contributed to this update to RFC 7706 include: Florian
-      Obser, nusenu, Wouter Wijngaards, [[ others go here ]].</t>
+      Obser, nusenu, Wouter Wijngaards, and Mukund Sivaraman.</t>
     </section>
   </back>
 </rfc>
