@@ -55,9 +55,6 @@
       that does not pose a threat to other users of the DNS, at the cost of
       adding some operational fragility for the operator.</t>
 
-      <t>This draft will update RFC 7706. See Section 1.1 for a list of topics
-      that will be added in the update.</t>
-
       <t>[ This document is being collaborated on in Github at:
       https://github.com/wkumari/draft-kh-dnsop-7706bis. The most recent
       version of the document, open issues, and so on should all be available
@@ -135,10 +132,16 @@
         <t>RFC 7706 explicitly required that a root server instance be run
         on the loopback interface of the host running the validating resolver.
         However, RFC 7706 also had examples of how to set up common software
-        that did not use the loopback interface. Thus, this document loosens
-        the restriction on using the loopback interface but keeps the requirement that only
+        that did not use the loopback interface. This document loosens
+        the restriction on using the loopback interface and in fact
+        allows the use of a local service, not necessarily an
+        authoritative server. However, the document keeps the requirement that only
         systems running on that single host be able to query that authoritatve root
-        service.</t>
+        server or service.</t>
+        
+        <t>This document changes the use cases for running a local root
+        service more consistent with the reasons operators said they had for
+        using RFC 7706.</t>
 
         <t>Removed the prohibition on distribution of recursive DNS servers
         including configurations for this design because some already do, and
@@ -151,20 +154,6 @@
         <t>Refreshed the list of where one can get copies of the root zone.</t>
 
         <t>Added examples of other resolvers and updated the existing examples.</t>
-
-        <t>[ This section will list all the changes from RFC 7706. For this
-        draft, it is also the list of changes that we will make in future
-        versions of the daft. ]</t>
-
-        <t>[ Make the use cases explicit. Be clearer that a real use case is
-        folks who are worried that root server unavailabilty due to DDoS
-        against them is a reason some people would use the mechanisms here.
-        ]</t>
-
-        <t>[ Describe how slaving the root zone from root zone servers does
-        not fully remove the reliance on the root servers being available.
-        ]</t>
-
 
       </section>
 
