@@ -4,7 +4,6 @@
 <!ENTITY rfc2119 PUBLIC "" "../reference.RFC.2119.xml">
 <!ENTITY rfc4033 PUBLIC "" "reference.RFC.4033.xml">
 <!ENTITY rfc8174 PUBLIC "" "reference.RFC.8174.xml">
-<!ENTITY rfc8198 PUBLIC "" "reference.RFC.8198.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
 <rfc category="info" docName="draft-ietf-dnsop-7706bis" ipr="trust200902"
@@ -125,9 +124,6 @@
       act as an authoritative server for some zones, but other
       recursive resolver software might need to be able to talk to an
       authoritative server running on the same host.</t>
-
-      <t>A different approach to solving some of the problems discussed in
-      this document is described in <xref target="RFC8198"/>.</t>
 
       <section title="Updates from RFC 7706">
         <t>RFC 7706 explicitly required that a root server instance be run
@@ -294,7 +290,6 @@
     </references>
 
     <references title="Informative References">
-      <?rfc include='reference.RFC.8198'?>
 
       <reference anchor="Manning2013"
                  target="http://www.sfc.wide.ad.jp/dissertation/bill_e.html">
