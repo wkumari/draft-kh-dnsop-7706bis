@@ -175,7 +175,7 @@
           <t>The system MUST be able to validate every signed record in a zone with DNSSEC <xref
           target="RFC4033"/>.</t>
 
-          <t>The system MUST have an up-to-date copy of the key used to sign
+          <t>The system MUST have an up-to-date copy of the KSK used to sign
           the DNS root.</t>
 
           <t>The system MUST be able to retrieve a copy of the entire root
@@ -227,17 +227,12 @@
       servers because those servers are updated when triggered by NOTIFY
       messages.</t>
 
-      <t>In a system that is using a local authoritative
-      server for the root zone,
-      if the contents of the root zone cannot be refreshed before the
-      expire time in the SOA,
-      the local root server MUST return a SERVFAIL
-      error response for all queries sent to it until the zone can be
-      successfully be set up again. Because this would cause the recursive
-      resolver to also
-      fail, the resolver MUST immediately switch to using other
-      (non-local) root servers if the resolver receives a SERVFAIL response
-      from a local root server.</t>
+      <t>There is a risk that a system using a local authoritative server for the
+      root zone cannot refresh the contents of the root zone before the expire time
+      in the SOA. A system using a local authoritative server for the root zone
+      MUST NOT serve stale data for the root zone. To mitigate the risk that stale
+      data is served, the local root server MUST immediately switch to using
+      non-local root servers.</t>
 
       <t>In a resolver that is using an internal service for the root zone.
       if the contents of the root zone cannot be refreshed before the
@@ -578,7 +573,8 @@ auth-zone:
       recommendation to do so.</t>
 
       <t>People who contributed to this update to RFC 7706 include: Florian
-      Obser, nusenu, Wouter Wijngaards, Mukund Sivaraman, and Bob Harold.</t>
+      Obser, nusenu, Wouter Wijngaards, Mukund Sivaraman, Bob Harold, and
+      Leo Vegoda.</t>
     </section>
   </back>
 </rfc>
