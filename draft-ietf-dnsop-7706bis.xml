@@ -141,7 +141,7 @@
         server or service.</t>
         
         <t>This document changes the use cases for running a local root
-        service more consistent with the reasons operators said they had for
+        service to be more consistent with the reasons operators said they had for
         using RFC 7706.</t>
 
         <t>Removed the prohibition on distribution of recursive DNS servers
@@ -188,7 +188,7 @@
           server for the root that responds only on
           one of the loopback addresses (that is, an
           address in the range 127/8 for IPv4 or ::1 in IPv6).
-          Another method to have the resolver software also act as an
+          Another method is to have the resolver software also act as an
           authoritative server for the root zone, but only for answering
           queries from itself.</t>
         </list></t>
@@ -228,20 +228,20 @@
       messages.</t>
 
       <t>In a system that is using a local authoritative
-      server for the root zone.
+      server for the root zone,
       if the contents of the root zone cannot be refreshed before the
       expire time in the SOA,
       the local root server MUST return a SERVFAIL
       error response for all queries sent to it until the zone can be
       successfully be set up again. Because this would cause the recursive
       resolver to also
-      fail, the resolver MUST immediatly switch to using other
+      fail, the resolver MUST immediately switch to using other
       (non-local) root servers if the resolver receives a SERVFAIL response
       from a local root server.</t>
 
       <t>In a resolver that is using an internal service for the root zone.
       if the contents of the root zone cannot be refreshed before the
-      expire time in the SOA, the resolver MUST immediatly switch to
+      expire time in the SOA, the resolver MUST immediately switch to
       using non-local root servers.</t>
 
       <t>In the event that refreshing the contents of the root zone fails, the
@@ -578,7 +578,7 @@ auth-zone:
       recommendation to do so.</t>
 
       <t>People who contributed to this update to RFC 7706 include: Florian
-      Obser, nusenu, Wouter Wijngaards, and Mukund Sivaraman.</t>
+      Obser, nusenu, Wouter Wijngaards, Mukund Sivaraman, and Bob Harold.</t>
     </section>
   </back>
 </rfc>
