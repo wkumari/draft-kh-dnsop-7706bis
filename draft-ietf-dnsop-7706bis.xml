@@ -71,9 +71,7 @@
       recursive resolver's cache, the resolver must send a query to a root
       server to get the information for that TLD, or to find out that the TLD
       does not exist. Research shows that the vast majority of queries going
-      to the root are for names that do not exist in the root zone because
-      negative answers are sometimes cached for a much shorter period of
-      time.</t>
+      to the root are for names that do not exist in the root zone.</t>
 
       <t>Many of the queries from recursive resolvers to root servers get
       answers that are referrals to other servers. Malicious third parties
@@ -124,7 +122,11 @@
       resolver software does not need to add new functionality to
       act as an authoritative server for some zones, but other
       recursive resolver software might need to be able to talk to an
-      authoritative server running on the same host.</t>
+      authoritative server running on the same host.
+      Some resolver software supports being both an authoritative server
+      and a resolver but separated by logical "views", allowing a local
+      root to be implemented within a single process; examples of this
+      can be seen in <xref target="examples"/>.</t>
 
       <t>A different approach to solving some of the problems discussed in
       this document is described in <xref target="RFC8198"/>.</t>
@@ -234,7 +236,7 @@
       data is served, the local root server MUST immediately switch to using
       non-local root servers.</t>
 
-      <t>In a resolver that is using an internal service for the root zone.
+      <t>In a resolver that is using an internal service for the root zone,
       if the contents of the root zone cannot be refreshed before the
       expire time in the SOA, the resolver MUST immediately switch to
       using non-local root servers.</t>
@@ -268,11 +270,10 @@
       benefits and costs of deploying DNSSEC <xref target="RFC4033"/>.</t>
 
       <t>As stated in <xref target="intro"/>, this design explicitly only
-      allows the new root zone server to be run on the same host, answering
-      queries only from resolvers on that host, in order to prevent the server
-      from serving authoritative answers to any system other than the
-      recursive resolver. This has the security property of limiting damage to
-      any other system that might try to rely on an altered copy of the
+      allows the local copy of the root zone information to be
+      available only from resolvers on that host.
+      This has the security property of limiting damage to clients of
+      any local resolver that might try to rely on an altered copy of the
       root.</t>
     </section>
   </middle>
@@ -469,8 +470,7 @@ auth-zone:
       </section>
 
       <section title="Example Configuration: BIND 9.14" anchor="bind-9-14">
-        <t>BIND 9.14 (which, at the time of publication of this document is
-        a future release) can set up a local mirror of the root zone with a
+        <t>BIND 9.14 can set up a local mirror of the root zone with a
         small configuration option:</t>
 
         <figure>
@@ -486,8 +486,8 @@ zone "." {
         of any other zone, an explicit list of primary servers needs to be
         provided.</t>
         
-        <t>See the documentation for BIND 9.14 (when it is released) for more detail
-        about how to use this simplified configuration</t>
+        <t>See the documentation for BIND 9.14 for more detail
+        about how to use this simplified configuration.</t>
       </section>
 
       <section title="Example Configuration: Unbound 1.9">

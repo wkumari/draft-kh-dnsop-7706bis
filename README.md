@@ -8,7 +8,11 @@ Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Updates: 7706 (if approved)                                   P. Hoffman
 Intended status: Informational                                     ICANN
+<<<<<<< HEAD
 Expires: May 20, 2020                                  November 17, 2019
+=======
+Expires: May 19, 2020                                  November 16, 2019
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 
                Running a Root Server Local to a Resolver
@@ -47,7 +51,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
+<<<<<<< HEAD
    This Internet-Draft will expire on May 20, 2020.
+=======
+   This Internet-Draft will expire on May 19, 2020.
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 
 
@@ -55,7 +63,11 @@ Status of This Memo
 
 
 
+<<<<<<< HEAD
 Kumari & Hoffman          Expires May 20, 2020                  [Page 1]
+=======
+Kumari & Hoffman          Expires May 19, 2020                  [Page 1]
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 Internet-Draft              Root Server Local              November 2019
 
@@ -107,17 +119,22 @@ Table of Contents
    a root server to get the information for that TLD, or to find out
    that the TLD does not exist.  Research shows that the vast majority
    of queries going to the root are for names that do not exist in the
+   root zone.
 
 
 
+<<<<<<< HEAD
 
 Kumari & Hoffman          Expires May 20, 2020                  [Page 2]
 
 Internet-Draft              Root Server Local              November 2019
 
+=======
+Kumari & Hoffman          Expires May 19, 2020                  [Page 2]
+
+Internet-Draft              Root Server Local              November 2019
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
-   root zone because negative answers are sometimes cached for a much
-   shorter period of time.
 
    Many of the queries from recursive resolvers to root servers get
    answers that are referrals to other servers.  Malicious third parties
@@ -163,21 +180,28 @@ Internet-Draft              Root Server Local              November 2019
    recursive resolution system might fail in ways that are hard to
    diagnose.
 
-
-
-
-
-Kumari & Hoffman          Expires May 20, 2020                  [Page 3]
-
-Internet-Draft              Root Server Local              November 2019
-
-
    This design uses authoritative service running on the same machine as
    the recursive resolver.  Common open source recursive resolver
    software does not need to add new functionality to act as an
    authoritative server for some zones, but other recursive resolver
+
+
+
+<<<<<<< HEAD
+
+Kumari & Hoffman          Expires May 20, 2020                  [Page 3]
+=======
+Kumari & Hoffman          Expires May 19, 2020                  [Page 3]
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
+
+Internet-Draft              Root Server Local              November 2019
+
+
    software might need to be able to talk to an authoritative server
-   running on the same host.
+   running on the same host.  Some resolver software supports being both
+   an authoritative server and a resolver but separated by logical
+   "views", allowing a local root to be implemented within a single
+   process; examples of this can be seen in Appendix B.
 
    A different approach to solving some of the problems discussed in
    this document is described in [RFC8198].
@@ -223,7 +247,12 @@ Internet-Draft              Root Server Local              November 2019
 
 
 
+<<<<<<< HEAD
 Kumari & Hoffman          Expires May 20, 2020                  [Page 4]
+=======
+
+Kumari & Hoffman          Expires May 19, 2020                  [Page 4]
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 Internet-Draft              Root Server Local              November 2019
 
@@ -279,7 +308,11 @@ Internet-Draft              Root Server Local              November 2019
 
 
 
+<<<<<<< HEAD
 Kumari & Hoffman          Expires May 20, 2020                  [Page 5]
+=======
+Kumari & Hoffman          Expires May 19, 2020                  [Page 5]
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 Internet-Draft              Root Server Local              November 2019
 
@@ -297,10 +330,17 @@ Internet-Draft              Root Server Local              November 2019
    mitigate the risk that stale data is served, the local root server
    MUST immediately switch to using non-local root servers.
 
+<<<<<<< HEAD
    In a resolver that is using an internal service for the root zone.
    if the contents of the root zone cannot be refreshed before the
    expire time in the SOA, the resolver MUST immediately switch to using
    non-local root servers.
+=======
+   In a resolver that is using an internal service for the root zone, if
+   the contents of the root zone cannot be refreshed before the expire
+   time in the SOA, the resolver MUST immediately switch to using non-
+   local root servers.
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
    In the event that refreshing the contents of the root zone fails, the
    results can be disastrous.  For example, sometimes all the NS records
@@ -330,20 +370,35 @@ Internet-Draft              Root Server Local              November 2019
    described in this document should be familiar with the operational
    benefits and costs of deploying DNSSEC [RFC4033].
 
+<<<<<<< HEAD
    As stated in Section 1, this design explicitly only allows the new
    root zone server to be run on the same host, answering queries only
 
 
 
 Kumari & Hoffman          Expires May 20, 2020                  [Page 6]
+=======
+   As stated in Section 1, this design explicitly only allows the local
+   copy of the root zone information to be available only from resolvers
+
+
+
+Kumari & Hoffman          Expires May 19, 2020                  [Page 6]
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 Internet-Draft              Root Server Local              November 2019
 
 
+<<<<<<< HEAD
    from resolvers on that host, in order to prevent the server from
    serving authoritative answers to any system other than the recursive
    resolver.  This has the security property of limiting damage to any
    other system that might try to rely on an altered copy of the root.
+=======
+   on that host.  This has the security property of limiting damage to
+   clients of any local resolver that might try to rely on an altered
+   copy of the root.
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 5.  References
 
@@ -391,11 +446,21 @@ Appendix A.  Current Sources of the Root Zone
 
 
 
+<<<<<<< HEAD
 Kumari & Hoffman          Expires May 20, 2020                  [Page 7]
 
 Internet-Draft              Root Server Local              November 2019
+=======
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
+Kumari & Hoffman          Expires May 19, 2020                  [Page 7]
+
+Internet-Draft              Root Server Local              November 2019
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
    o  b.root-servers.net
 
    o  c.root-servers.net
@@ -447,7 +512,11 @@ B.1.  Example Configuration: BIND 9.12
 
 
 
+<<<<<<< HEAD
 Kumari & Hoffman          Expires May 20, 2020                  [Page 8]
+=======
+Kumari & Hoffman          Expires May 19, 2020                  [Page 8]
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 Internet-Draft              Root Server Local              November 2019
 
@@ -503,7 +572,11 @@ Internet-Draft              Root Server Local              November 2019
 
 
 
+<<<<<<< HEAD
 Kumari & Hoffman          Expires May 20, 2020                  [Page 9]
+=======
+Kumari & Hoffman          Expires May 19, 2020                  [Page 9]
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 Internet-Draft              Root Server Local              November 2019
 
@@ -559,7 +632,11 @@ B.2.  Example Configuration: Unbound 1.8
 
 
 
+<<<<<<< HEAD
 Kumari & Hoffman          Expires May 20, 2020                 [Page 10]
+=======
+Kumari & Hoffman          Expires May 19, 2020                 [Page 10]
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 Internet-Draft              Root Server Local              November 2019
 
@@ -588,9 +665,8 @@ Internet-Draft              Root Server Local              November 2019
 
 B.3.  Example Configuration: BIND 9.14
 
-   BIND 9.14 (which, at the time of publication of this document is a
-   future release) can set up a local mirror of the root zone with a
-   small configuration option:
+   BIND 9.14 can set up a local mirror of the root zone with a small
+   configuration option:
 
    zone "." {
        type mirror;
@@ -602,8 +678,8 @@ B.3.  Example Configuration: BIND 9.14
    any other zone, an explicit list of primary servers needs to be
    provided.
 
-   See the documentation for BIND 9.14 (when it is released) for more
-   detail about how to use this simplified configuration
+   See the documentation for BIND 9.14 for more detail about how to use
+   this simplified configuration.
 
 B.4.  Example Configuration: Unbound 1.9
 
@@ -615,7 +691,12 @@ B.4.  Example Configuration: Unbound 1.9
 
 
 
+<<<<<<< HEAD
 Kumari & Hoffman          Expires May 20, 2020                 [Page 11]
+=======
+
+Kumari & Hoffman          Expires May 19, 2020                 [Page 11]
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 Internet-Draft              Root Server Local              November 2019
 
@@ -671,7 +752,11 @@ B.6.  Example Configuration: Microsoft Windows Server 2012
 
 
 
+<<<<<<< HEAD
 Kumari & Hoffman          Expires May 20, 2020                 [Page 12]
+=======
+Kumari & Hoffman          Expires May 19, 2020                 [Page 12]
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 
 Internet-Draft              Root Server Local              November 2019
 
@@ -727,5 +812,9 @@ Authors' Addresses
 
 
 
+<<<<<<< HEAD
 Kumari & Hoffman          Expires May 20, 2020                 [Page 13]
+=======
+Kumari & Hoffman          Expires May 19, 2020                 [Page 13]
+>>>>>>> f35a0549e7cd84e2626765c1a728f0201c23b40d
 ```
