@@ -5,10 +5,11 @@
 <!ENTITY rfc4033 PUBLIC "" "reference.RFC.4033.xml">
 <!ENTITY rfc8174 PUBLIC "" "reference.RFC.8174.xml">
 <!ENTITY rfc8198 PUBLIC "" "reference.RFC.8198.xml">
+<!ENTITY rfc8499 PUBLIC "" "reference.RFC.8499.xml">
 ]>
 <!-- WK: Set category, IPR, docName -->
 <rfc category="info" docName="draft-ietf-dnsop-7706bis" ipr="trust200902"
-     updates="7706">
+     obsoletes="7706">
   <?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
 
   <?rfc toc="yes" ?>
@@ -95,7 +96,7 @@
       service on the same host as the recursive server, and use that service
       when the recursive resolver looks up root information. The recursive
       resolver validates all responses from the root service on the same host,
-      just as it would all responses from a remote root server.</t>
+      just as it would all validate responses from a remote root server.</t>
 
       <t>This design explicitly only allows the new root zone service to be run
       on the same server as the recursive resolver, in order to prevent the
@@ -130,6 +131,8 @@
 
       <t>A different approach to solving some of the problems discussed in
       this document is described in <xref target="RFC8198"/>.</t>
+      
+      <t>Readers are expected to be familiar with <xref target="RFC8499"/>.</t>
 
       <section title="Updates from RFC 7706">
         <t>RFC 7706 explicitly required that a root server instance be run
@@ -139,7 +142,7 @@
         the restriction on using the loopback interface and in fact
         allows the use of a local service, not necessarily an
         authoritative server. However, the document keeps the requirement that only
-        systems running on that single host be able to query that authoritatve root
+        systems running on that single host be able to query that authoritative root
         server or service.</t>
         
         <t>This document changes the use cases for running a local root
@@ -177,8 +180,8 @@
           <t>The system MUST be able to validate every signed record in a zone with DNSSEC <xref
           target="RFC4033"/>.</t>
 
-          <t>The system MUST have an up-to-date copy of the KSK used to sign
-          the DNS root.</t>
+          <t>The system MUST have an up-to-date copy of the Key Signing Key (KSK) <xref
+          target="RFC4033"/> used to sign the DNS root.</t>
 
           <t>The system MUST be able to retrieve a copy of the entire root
           zone (including all DNSSEC-related records).</t>
@@ -291,10 +294,14 @@
       <?rfc include='reference.RFC.4033'?>
 
       <?rfc include='reference.RFC.8174'?>
+
+      <?rfc include='reference.RFC.8499'?>
+
     </references>
 
     <references title="Informative References">
       <?rfc include='reference.RFC.8198'?>
+
 
       <reference anchor="Manning2013"
                  target="http://www.sfc.wide.ad.jp/dissertation/bill_e.html">
@@ -519,7 +526,7 @@ auth-zone:
       <section title="Example Configuration: Knot Resolver">
         <t>Knot Resolver uses its "prefill" module to load the root zone
         information. This is described at
-        &lt;https://knot-resolver.readthedocs.io/en/stable/modules.html#root-on-loopback-rfc-7706&gt;.</t>
+        &lt;https://knot-resolver.readthedocs.io/en/v5.0.1/modules-rfc7706.html&gt;.</t>
       </section>
 
       <section title="Example Configuration: Microsoft Windows Server 2012">
