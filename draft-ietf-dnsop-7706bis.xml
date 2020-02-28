@@ -95,7 +95,7 @@
       service on the same host as the recursive server, and use that service
       when the recursive resolver looks up root information. The recursive
       resolver validates all responses from the root service on the same host,
-      just as it would all responses from a remote root server.</t>
+      just as it would validate all responses from a remote root server.</t>
 
       <t>This design explicitly only allows the new root zone service to be run
       on the same server as the recursive resolver, in order to prevent the
