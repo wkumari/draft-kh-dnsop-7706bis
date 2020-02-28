@@ -6,9 +6,9 @@
 
 Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
-Updates: 7706 (if approved)                                   P. Hoffman
+Obsoletes: 7706 (if approved)                                 P. Hoffman
 Intended status: Informational                                     ICANN
-Expires: July 15, 2020                                  January 12, 2019
+Expires: August 31, 2020                               February 28, 2020
 
 
                Running a Root Server Local to a Resolver
@@ -47,7 +47,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on July 15, 2020.
+   This Internet-Draft will expire on August 31, 2020.
 
 
 
@@ -55,14 +55,14 @@ Status of This Memo
 
 
 
-Kumari & Hoffman          Expires July 15, 2020                 [Page 1]
+Kumari & Hoffman         Expires August 31, 2020                [Page 1]
 
-Internet-Draft              Root Server Local               January 2019
+Internet-Draft              Root Server Local              February 2020
 
 
 Copyright Notice
 
-   Copyright (c) 2019 IETF Trust and the persons identified as the
+   Copyright (c) 2020 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -87,7 +87,7 @@ Table of Contents
    6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
      6.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
      6.2.  Informative References  . . . . . . . . . . . . . . . . .   7
-   Appendix A.  Current Sources of the Root Zone . . . . . . . . . .   7
+   Appendix A.  Current Sources of the Root Zone . . . . . . . . . .   8
      A.1.  Root Zone Services  . . . . . . . . . . . . . . . . . . .   8
    Appendix B.  Example Configurations of Common Implementations . .   8
      B.1.  Example Configuration: BIND 9.12  . . . . . . . . . . . .   9
@@ -111,9 +111,9 @@ Table of Contents
 
 
 
-Kumari & Hoffman          Expires July 15, 2020                 [Page 2]
+Kumari & Hoffman         Expires August 31, 2020                [Page 2]
 
-Internet-Draft              Root Server Local               January 2019
+Internet-Draft              Root Server Local              February 2020
 
 
    of queries going to the root are for names that do not exist in the
@@ -141,8 +141,8 @@ Internet-Draft              Root Server Local               January 2019
    to-date root zone service on the same host as the recursive server,
    and use that service when the recursive resolver looks up root
    information.  The recursive resolver validates all responses from the
-   root service on the same host, just as it would all responses from a
-   remote root server.
+   root service on the same host, just as it would all validate
+   responses from a remote root server.
 
    This design explicitly only allows the new root zone service to be
    run on the same server as the recursive resolver, in order to prevent
@@ -167,9 +167,9 @@ Internet-Draft              Root Server Local               January 2019
 
 
 
-Kumari & Hoffman          Expires July 15, 2020                 [Page 3]
+Kumari & Hoffman         Expires August 31, 2020                [Page 3]
 
-Internet-Draft              Root Server Local               January 2019
+Internet-Draft              Root Server Local              February 2020
 
 
    This design uses authoritative service running on the same machine as
@@ -185,6 +185,8 @@ Internet-Draft              Root Server Local               January 2019
    A different approach to solving some of the problems discussed in
    this document is described in [RFC8198].
 
+   Readers are expected to be familiar with [RFC8499].
+
 1.1.  Updates from RFC 7706
 
    RFC 7706 explicitly required that a root server instance be run on
@@ -194,8 +196,8 @@ Internet-Draft              Root Server Local               January 2019
    restriction on using the loopback interface and in fact allows the
    use of a local service, not necessarily an authoritative server.
    However, the document keeps the requirement that only systems running
-   on that single host be able to query that authoritatve root server or
-   service.
+   on that single host be able to query that authoritative root server
+   or service.
 
    This document changes the use cases for running a local root service
    to be more consistent with the reasons operators said they had for
@@ -216,17 +218,18 @@ Internet-Draft              Root Server Local               January 2019
 1.2.  Requirements Notation
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-   document are to be interpreted as described in BCP 14 [RFC2119]
-   [RFC8174] when, and only when, they appear in all capitals, as shown
-   here.
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in BCP
 
 
 
-Kumari & Hoffman          Expires July 15, 2020                 [Page 4]
+Kumari & Hoffman         Expires August 31, 2020                [Page 4]
 
-Internet-Draft              Root Server Local               January 2019
+Internet-Draft              Root Server Local              February 2020
 
+
+   14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
 
 2.  Requirements
 
@@ -235,8 +238,8 @@ Internet-Draft              Root Server Local               January 2019
    o  The system MUST be able to validate every signed record in a zone
       with DNSSEC [RFC4033].
 
-   o  The system MUST have an up-to-date copy of the KSK used to sign
-      the DNS root.
+   o  The system MUST have an up-to-date copy of the Key Signing Key
+      (KSK) [RFC4033] used to sign the DNS root.
 
    o  The system MUST be able to retrieve a copy of the entire root zone
       (including all DNSSEC-related records).
@@ -271,18 +274,19 @@ Internet-Draft              Root Server Local               January 2019
    1.  Retrieve a copy of the root zone.  (See Appendix A for some
        current locations of sources.)
 
+
+
+
+
+
+Kumari & Hoffman         Expires August 31, 2020                [Page 5]
+
+Internet-Draft              Root Server Local              February 2020
+
+
    2.  Start the authoritative service for the root zone in a manner
        that prevents any system other than a recursive resolver on the
        same host from accessing it.
-
-
-
-
-
-Kumari & Hoffman          Expires July 15, 2020                 [Page 5]
-
-Internet-Draft              Root Server Local               January 2019
-
 
    The contents of the root zone MUST be refreshed using the timers from
    the SOA record in the root zone, as described in [RFC1035].  This
@@ -327,20 +331,21 @@ Internet-Draft              Root Server Local               January 2019
    in Section 2 can be fooled into giving bad responses in the same way
    as any recursive resolver that does not do DNSSEC validation on
    responses from a remote root server.  Anyone deploying the method
+
+
+
+
+Kumari & Hoffman         Expires August 31, 2020                [Page 6]
+
+Internet-Draft              Root Server Local              February 2020
+
+
    described in this document should be familiar with the operational
    benefits and costs of deploying DNSSEC [RFC4033].
 
-   As stated in Section 1, this design explicitly only allows the local
-   copy of the root zone information to be available only from resolvers
-
-
-
-Kumari & Hoffman          Expires July 15, 2020                 [Page 6]
-
-Internet-Draft              Root Server Local               January 2019
-
-
-   on that host.  This has the security property of limiting damage to
+   As stated in Section 1, this design explicitly allows the local copy
+   of the root zone information to be available only from resolvers on
+   that host.  This has the security property of limiting damage to
    clients of any local resolver that might try to rely on an altered
    copy of the root.
 
@@ -370,6 +375,10 @@ Internet-Draft              Root Server Local               January 2019
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/info/rfc8174>.
 
+   [RFC8499]  Hoffman, P., Sullivan, A., and K. Fujiwara, "DNS
+              Terminology", BCP 219, RFC 8499, DOI 10.17487/RFC8499,
+              January 2019, <https://www.rfc-editor.org/info/rfc8499>.
+
 6.2.  Informative References
 
    [Manning2013]
@@ -380,6 +389,13 @@ Internet-Draft              Root Server Local               January 2019
               DNSSEC-Validated Cache", RFC 8198, DOI 10.17487/RFC8198,
               July 2017, <https://www.rfc-editor.org/info/rfc8198>.
 
+
+
+Kumari & Hoffman         Expires August 31, 2020                [Page 7]
+
+Internet-Draft              Root Server Local              February 2020
+
+
 Appendix A.  Current Sources of the Root Zone
 
    The root zone can be retrieved from anywhere as long as it comes with
@@ -388,13 +404,6 @@ Appendix A.  Current Sources of the Root Zone
    servers at xfr.lax.dns.icann.org and xfr.cjr.dns.icann.org.  One can
    also get the root zone from IANA as a text file over HTTPS at
    <https://www.internic.net/domain/root.zone>.
-
-
-
-Kumari & Hoffman          Expires July 15, 2020                 [Page 7]
-
-Internet-Draft              Root Server Local               January 2019
-
 
    Currently, the root can also be retrieved by AXFR over TCP from the
    following root server operators:
@@ -434,23 +443,21 @@ Appendix B.  Example Configurations of Common Implementations
 
    This section shows fragments of configurations for some popular
    recursive server software that is believed to correctly implement the
+
+
+
+
+Kumari & Hoffman         Expires August 31, 2020                [Page 8]
+
+Internet-Draft              Root Server Local              February 2020
+
+
    requirements given in this document.  The examples have been updated
    since the publication of RFC 7706.
 
    The IPv4 and IPv6 addresses in this section were checked recently by
    testing for AXFR over TCP from each address for the known single-
    letter names in the root-servers.net zone.
-
-
-
-
-
-
-
-Kumari & Hoffman          Expires July 15, 2020                 [Page 8]
-
-Internet-Draft              Root Server Local               January 2019
-
 
 B.1.  Example Configuration: BIND 9.12
 
@@ -496,16 +503,9 @@ B.1.  Example Configuration: BIND 9.12
 
 
 
-
-
-
-
-
-
-
-Kumari & Hoffman          Expires July 15, 2020                 [Page 9]
+Kumari & Hoffman         Expires August 31, 2020                [Page 9]
 
-Internet-Draft              Root Server Local               January 2019
+Internet-Draft              Root Server Local              February 2020
 
 
    view root {
@@ -559,9 +559,9 @@ B.2.  Example Configuration: Unbound 1.8
 
 
 
-Kumari & Hoffman          Expires July 15, 2020                [Page 10]
+Kumari & Hoffman         Expires August 31, 2020               [Page 10]
 
-Internet-Draft              Root Server Local               January 2019
+Internet-Draft              Root Server Local              February 2020
 
 
    auth-zone:
@@ -615,9 +615,9 @@ B.4.  Example Configuration: Unbound 1.9
 
 
 
-Kumari & Hoffman          Expires July 15, 2020                [Page 11]
+Kumari & Hoffman         Expires August 31, 2020               [Page 11]
 
-Internet-Draft              Root Server Local               January 2019
+Internet-Draft              Root Server Local              February 2020
 
 
    auth-zone:
@@ -637,8 +637,7 @@ B.5.  Example Configuration: Knot Resolver
 
    Knot Resolver uses its "prefill" module to load the root zone
    information.  This is described at <https://knot-
-   resolver.readthedocs.io/en/stable/modules.html#root-on-loopback-rfc-
-   7706>.
+   resolver.readthedocs.io/en/v5.0.1/modules-rfc7706.html>.
 
 B.6.  Example Configuration: Microsoft Windows Server 2012
 
@@ -667,17 +666,15 @@ B.6.  Example Configuration: Microsoft Windows Server 2012
    5.  In the "Master DNS Servers" dialog box, enter
        "b.root-servers.net".  The system validates that it can do a zone
        transfer from that server.  (After this configuration is
-
-
-
-
-Kumari & Hoffman          Expires July 15, 2020                [Page 12]
-
-Internet-Draft              Root Server Local               January 2019
-
-
        completed, the DNS Manager will attempt to transfer from all of
        the root zone servers.)
+
+
+
+Kumari & Hoffman         Expires August 31, 2020               [Page 12]
+
+Internet-Draft              Root Server Local              February 2020
+
 
    6.  In the "Completing the New Zone Wizard" dialog box, click
        "Finish".
@@ -727,5 +724,8 @@ Authors' Addresses
 
 
 
-Kumari & Hoffman          Expires July 15, 2020                [Page 13]
+
+
+
+Kumari & Hoffman         Expires August 31, 2020               [Page 13]
 ```
