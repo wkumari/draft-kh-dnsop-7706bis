@@ -56,6 +56,8 @@
       document shows how to start and maintain such a copy of the root zone
       that does not cause problems for other users of the DNS, at the cost of
       adding some operational fragility for the operator.</t>
+      
+      <t>This document obsoletes RFC 7706.</t>
 
       <t>[ This document is being collaborated on in Github at:
       https://github.com/wkumari/draft-kh-dnsop-7706bis. The most recent
@@ -105,7 +107,7 @@
       only answer queries from resolvers on the same host, and MUST NOT
       answer queries from any other resolver.</t>
 
-      <t>At the time that RFC 7706 was published, it was considered
+      <t>At the time that RFC 7706 <xref target="RFC7706"/> was published, it was considered
       controversial: there was not consensus on whether this was a "best
       practice". In fact, many people felt that it is an excessively risky
       practice because it introduced a new operational piece to local DNS
@@ -295,11 +297,15 @@
 
       <?rfc include='reference.RFC.8174'?>
 
+      <?rfc include='reference.RFC.7706'?>
+
       <?rfc include='reference.RFC.8499'?>
 
     </references>
 
     <references title="Informative References">
+      <?rfc include='reference.RFC.5936'?>
+
       <?rfc include='reference.RFC.8198'?>
 
 
@@ -318,7 +324,7 @@
     <section anchor="sources" title="Current Sources of the Root Zone">
       <t>The root zone can be retrieved from anywhere as long as it comes with
       all the DNSSEC records needed for validation. Currently, one can get the
-      root zone from ICANN by zone transfer (AXFR) over TCP from DNS servers
+      root zone from ICANN by zone transfer (AXFR) <xref target="RFC5936"/> over TCP from DNS servers
       at xfr.lax.dns.icann.org and xfr.cjr.dns.icann.org.
       One can also get the root zone from IANA as a text file over HTTPS
       at &lt;https://www.internic.net/domain/root.zone&gt;.</t>
