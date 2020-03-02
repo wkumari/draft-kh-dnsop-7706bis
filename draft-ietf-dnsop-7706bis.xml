@@ -48,7 +48,10 @@
 
     <abstract>
       <t>Some DNS recursive resolvers have longer-than-desired round-trip
-      times to the closest DNS root server such as during a network attack. Some DNS recursive resolver
+      times to the closest DNS root server; those resolvers 
+      may have difficulty getting responses from the root servers, such as 
+      during a network attack.
+      Some DNS recursive resolver
       operators want to prevent snooping by third parties of requests sent to DNS root servers.
       Such resolvers can greatly decrease the round-trip
       time and prevent observation of requests by serving a copy of the full
@@ -98,7 +101,7 @@
       service on the same host as the recursive server, and use that service
       when the recursive resolver looks up root information. The recursive
       resolver validates all responses from the root service on the same host,
-      just as it would all validate responses from a remote root server.</t>
+      just as it would validate all responses from a remote root server.</t>
 
       <t>This design explicitly only allows the new root zone service to be run
       on the same server as the recursive resolver, in order to prevent the
@@ -182,7 +185,7 @@
           <t>The system MUST be able to validate every signed record in a zone with DNSSEC <xref
           target="RFC4033"/>.</t>
 
-          <t>The system MUST have an up-to-date copy of the Key Signing Key (KSK) <xref
+          <t>The system MUST have an up-to-date copy of the public part of the Key Signing Key (KSK) <xref
           target="RFC4033"/> used to sign the DNS root.</t>
 
           <t>The system MUST be able to retrieve a copy of the entire root
