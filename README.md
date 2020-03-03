@@ -8,7 +8,7 @@ Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Obsoletes: 7706 (if approved)                                 P. Hoffman
 Intended status: Informational                                     ICANN
-Expires: September 2, 2020                                 March 1, 2020
+Expires: September 3, 2020                                 March 2, 2020
 
 
                Running a Root Server Local to a Resolver
@@ -17,15 +17,17 @@ Expires: September 2, 2020                                 March 1, 2020
 Abstract
 
    Some DNS recursive resolvers have longer-than-desired round-trip
-   times to the closest DNS root server such as during a network attack.
-   Some DNS recursive resolver operators want to prevent snooping by
-   third parties of requests sent to DNS root servers.  Such resolvers
-   can greatly decrease the round-trip time and prevent observation of
-   requests by serving a copy of the full root zone on the same server,
-   such as on a loopback address or in the resolver software.  This
-   document shows how to start and maintain such a copy of the root zone
-   that does not cause problems for other users of the DNS, at the cost
-   of adding some operational fragility for the operator.
+   times to the closest DNS root server; those resolvers may have
+   difficulty getting responses from the root servers, such as during a
+   network attack.  Some DNS recursive resolver operators want to
+   prevent snooping by third parties of requests sent to DNS root
+   servers.  Such resolvers can greatly decrease the round-trip time and
+   prevent observation of requests by serving a copy of the full root
+   zone on the same server, such as on a loopback address or in the
+   resolver software.  This document shows how to start and maintain
+   such a copy of the root zone that does not cause problems for other
+   users of the DNS, at the cost of adding some operational fragility
+   for the operator.
 
    This document obsoletes RFC 7706.
 
@@ -49,13 +51,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 2, 2020.
+   This Internet-Draft will expire on September 3, 2020.
 
 
 
-
-
-Kumari & Hoffman        Expires September 2, 2020               [Page 1]
+Kumari & Hoffman        Expires September 3, 2020               [Page 1]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -111,7 +111,7 @@ Table of Contents
 
 
 
-Kumari & Hoffman        Expires September 2, 2020               [Page 2]
+Kumari & Hoffman        Expires September 3, 2020               [Page 2]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -141,7 +141,7 @@ Internet-Draft              Root Server Local                 March 2020
    to-date root zone service on the same host as the recursive server,
    and use that service when the recursive resolver looks up root
    information.  The recursive resolver validates all responses from the
-   root service on the same host, just as it would all validate
+   root service on the same host, just as it would validate all
    responses from a remote root server.
 
    This design explicitly only allows the new root zone service to be
@@ -167,7 +167,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 2, 2020               [Page 3]
+Kumari & Hoffman        Expires September 3, 2020               [Page 3]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -223,7 +223,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 2, 2020               [Page 4]
+Kumari & Hoffman        Expires September 3, 2020               [Page 4]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -238,8 +238,8 @@ Internet-Draft              Root Server Local                 March 2020
    o  The system MUST be able to validate every signed record in a zone
       with DNSSEC [RFC4033].
 
-   o  The system MUST have an up-to-date copy of the Key Signing Key
-      (KSK) [RFC4033] used to sign the DNS root.
+   o  The system MUST have an up-to-date copy of the public part of the
+      Key Signing Key (KSK) [RFC4033] used to sign the DNS root.
 
    o  The system MUST be able to retrieve a copy of the entire root zone
       (including all DNSSEC-related records).
@@ -279,7 +279,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 2, 2020               [Page 5]
+Kumari & Hoffman        Expires September 3, 2020               [Page 5]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -335,7 +335,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 2, 2020               [Page 6]
+Kumari & Hoffman        Expires September 3, 2020               [Page 6]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -391,7 +391,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 2, 2020               [Page 7]
+Kumari & Hoffman        Expires September 3, 2020               [Page 7]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -447,7 +447,7 @@ Appendix A.  Current Sources of the Root Zone
 
 
 
-Kumari & Hoffman        Expires September 2, 2020               [Page 8]
+Kumari & Hoffman        Expires September 3, 2020               [Page 8]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -503,7 +503,7 @@ B.1.  Example Configuration: BIND 9.12
 
 
 
-Kumari & Hoffman        Expires September 2, 2020               [Page 9]
+Kumari & Hoffman        Expires September 3, 2020               [Page 9]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -559,7 +559,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 2, 2020              [Page 10]
+Kumari & Hoffman        Expires September 3, 2020              [Page 10]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -615,7 +615,7 @@ B.3.  Example Configuration: BIND 9.14
 
 
 
-Kumari & Hoffman        Expires September 2, 2020              [Page 11]
+Kumari & Hoffman        Expires September 3, 2020              [Page 11]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -671,7 +671,7 @@ B.6.  Example Configuration: Microsoft Windows Server 2012
 
 
 
-Kumari & Hoffman        Expires September 2, 2020              [Page 12]
+Kumari & Hoffman        Expires September 3, 2020              [Page 12]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -727,5 +727,5 @@ Authors' Addresses
 
 
 
-Kumari & Hoffman        Expires September 2, 2020              [Page 13]
+Kumari & Hoffman        Expires September 3, 2020              [Page 13]
 ```
