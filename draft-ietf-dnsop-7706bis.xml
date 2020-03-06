@@ -329,8 +329,8 @@
       all the DNSSEC records needed for validation. Currently, one can get the
       root zone from ICANN by zone transfer (AXFR) <xref target="RFC5936"/> over TCP from DNS servers
       at xfr.lax.dns.icann.org and xfr.cjr.dns.icann.org.
-      One can also get the root zone from IANA as a text file over HTTPS
-      at &lt;https://www.internic.net/domain/root.zone&gt;.</t>
+      The root zone file can be obtained using methods described at
+      &lt;https://www.iana.org/domains/root/files&gt;.</t>
 
       <t>Currently, the root can also be retrieved by AXFR over TCP from the
       following root server operators:</t>

@@ -8,7 +8,7 @@ Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Obsoletes: 7706 (if approved)                                 P. Hoffman
 Intended status: Informational                                     ICANN
-Expires: September 3, 2020                                 March 2, 2020
+Expires: September 6, 2020                                 March 5, 2020
 
 
                Running a Root Server Local to a Resolver
@@ -51,11 +51,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 3, 2020.
+   This Internet-Draft will expire on September 6, 2020.
 
 
 
-Kumari & Hoffman        Expires September 3, 2020               [Page 1]
+Kumari & Hoffman        Expires September 6, 2020               [Page 1]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -111,7 +111,7 @@ Table of Contents
 
 
 
-Kumari & Hoffman        Expires September 3, 2020               [Page 2]
+Kumari & Hoffman        Expires September 6, 2020               [Page 2]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -167,7 +167,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 3, 2020               [Page 3]
+Kumari & Hoffman        Expires September 6, 2020               [Page 3]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -223,7 +223,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 3, 2020               [Page 4]
+Kumari & Hoffman        Expires September 6, 2020               [Page 4]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -279,7 +279,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 3, 2020               [Page 5]
+Kumari & Hoffman        Expires September 6, 2020               [Page 5]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -335,7 +335,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 3, 2020               [Page 6]
+Kumari & Hoffman        Expires September 6, 2020               [Page 6]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -391,7 +391,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 3, 2020               [Page 7]
+Kumari & Hoffman        Expires September 6, 2020               [Page 7]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -416,8 +416,8 @@ Appendix A.  Current Sources of the Root Zone
    all the DNSSEC records needed for validation.  Currently, one can get
    the root zone from ICANN by zone transfer (AXFR) [RFC5936] over TCP
    from DNS servers at xfr.lax.dns.icann.org and xfr.cjr.dns.icann.org.
-   One can also get the root zone from IANA as a text file over HTTPS at
-   <https://www.internic.net/domain/root.zone>.
+   The root zone file can be obtained using methods described at
+   <https://www.iana.org/domains/root/files>.
 
    Currently, the root can also be retrieved by AXFR over TCP from the
    following root server operators:
@@ -447,7 +447,7 @@ Appendix A.  Current Sources of the Root Zone
 
 
 
-Kumari & Hoffman        Expires September 3, 2020               [Page 8]
+Kumari & Hoffman        Expires September 6, 2020               [Page 8]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -503,7 +503,7 @@ B.1.  Example Configuration: BIND 9.12
 
 
 
-Kumari & Hoffman        Expires September 3, 2020               [Page 9]
+Kumari & Hoffman        Expires September 6, 2020               [Page 9]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -559,7 +559,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 3, 2020              [Page 10]
+Kumari & Hoffman        Expires September 6, 2020              [Page 10]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -615,7 +615,7 @@ B.3.  Example Configuration: BIND 9.14
 
 
 
-Kumari & Hoffman        Expires September 3, 2020              [Page 11]
+Kumari & Hoffman        Expires September 6, 2020              [Page 11]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -671,7 +671,7 @@ B.6.  Example Configuration: Microsoft Windows Server 2012
 
 
 
-Kumari & Hoffman        Expires September 3, 2020              [Page 12]
+Kumari & Hoffman        Expires September 6, 2020              [Page 12]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -727,5 +727,5 @@ Authors' Addresses
 
 
 
-Kumari & Hoffman        Expires September 3, 2020              [Page 13]
+Kumari & Hoffman        Expires September 6, 2020              [Page 13]
 ```
