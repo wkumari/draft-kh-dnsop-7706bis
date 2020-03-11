@@ -139,7 +139,7 @@
       
       <t>Readers are expected to be familiar with <xref target="RFC8499"/>.</t>
 
-      <section title="Updates from RFC 7706">
+      <section title="Changes from RFC 7706">
         <t>RFC 7706 explicitly required that a root server instance be run
         on the loopback interface of the host running the validating resolver.
         However, RFC 7706 also had examples of how to set up common software
