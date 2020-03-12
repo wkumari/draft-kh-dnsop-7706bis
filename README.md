@@ -8,7 +8,7 @@ Network Working Group                                          W. Kumari
 Internet-Draft                                                    Google
 Obsoletes: 7706 (if approved)                                 P. Hoffman
 Intended status: Informational                                     ICANN
-Expires: September 6, 2020                                 March 5, 2020
+Expires: September 13, 2020                               March 12, 2020
 
 
                Running a Root Server Local to a Resolver
@@ -51,11 +51,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 6, 2020.
+   This Internet-Draft will expire on September 13, 2020.
 
 
 
-Kumari & Hoffman        Expires September 6, 2020               [Page 1]
+Kumari & Hoffman       Expires September 13, 2020               [Page 1]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -78,7 +78,7 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-     1.1.  Updates from RFC 7706 . . . . . . . . . . . . . . . . . .   4
+     1.1.  Changes from RFC 7706 . . . . . . . . . . . . . . . . . .   4
      1.2.  Requirements Notation . . . . . . . . . . . . . . . . . .   4
    2.  Requirements  . . . . . . . . . . . . . . . . . . . . . . . .   5
    3.  Operation of the Root Zone on the Local Server  . . . . . . .   5
@@ -102,7 +102,7 @@ Table of Contents
 1.  Introduction
 
    DNS recursive resolvers have to provide answers to all queries from
-   their customers, even those for domain names that do not exist.  For
+   their clients, even those for domain names that do not exist.  For
    each queried name that is within a top-level domain (TLD) that is not
    in the recursive resolver's cache, the resolver must send a query to
    a root server to get the information for that TLD, or to find out
@@ -111,7 +111,7 @@ Table of Contents
 
 
 
-Kumari & Hoffman        Expires September 6, 2020               [Page 2]
+Kumari & Hoffman       Expires September 13, 2020               [Page 2]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -125,15 +125,15 @@ Internet-Draft              Root Server Local                 March 2020
    recursive resolver and root servers.
 
    The primary goals of this design are to provide more reliable answers
-   for queries to the root zone during network attacks, and to prevent
-   queries and responses from being visible on the network.  This design
-   will probably have little effect on getting faster responses to stub
-   resolver for good queries on TLDs, because the TTL for most TLDs is
-   usually long-lived (on the order of a day or two) and is thus usually
-   already in the cache of the recursive resolver; the same is true for
-   the TTL for negative answers from the root servers.  (Although the
-   primary goal of the design is for serving the root zone, the method
-   can be used for any zone.)
+   for queries to the root zone during network attacks that affect the
+   root servers, and to prevent queries and responses from being visible
+   on the network.  This design will probably have little effect on
+   getting faster responses to stub resolver for good queries on TLDs,
+   because the TTL for most TLDs is usually long-lived (on the order of
+   a day or two) and is thus usually already in the cache of the
+   recursive resolver; the same is true for the TTL for negative answers
+   from the root servers.  (Although the primary goal of the design is
+   for serving the root zone, the method can be used for any zone.)
 
    This document describes a method for the operator of a recursive
    resolver to have a complete root zone locally, and to hide queries
@@ -167,7 +167,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 6, 2020               [Page 3]
+Kumari & Hoffman       Expires September 13, 2020               [Page 3]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -187,7 +187,7 @@ Internet-Draft              Root Server Local                 March 2020
 
    Readers are expected to be familiar with [RFC8499].
 
-1.1.  Updates from RFC 7706
+1.1.  Changes from RFC 7706
 
    RFC 7706 explicitly required that a root server instance be run on
    the loopback interface of the host running the validating resolver.
@@ -223,7 +223,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 6, 2020               [Page 4]
+Kumari & Hoffman       Expires September 13, 2020               [Page 4]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -279,7 +279,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 6, 2020               [Page 5]
+Kumari & Hoffman       Expires September 13, 2020               [Page 5]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -335,7 +335,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 6, 2020               [Page 6]
+Kumari & Hoffman       Expires September 13, 2020               [Page 6]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -391,7 +391,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 6, 2020               [Page 7]
+Kumari & Hoffman       Expires September 13, 2020               [Page 7]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -447,7 +447,7 @@ Appendix A.  Current Sources of the Root Zone
 
 
 
-Kumari & Hoffman        Expires September 6, 2020               [Page 8]
+Kumari & Hoffman       Expires September 13, 2020               [Page 8]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -470,9 +470,9 @@ Appendix B.  Example Configurations of Common Implementations
    requirements given in this document.  The examples have been updated
    since the publication of RFC 7706.
 
-   The IPv4 and IPv6 addresses in this section were checked recently by
-   testing for AXFR over TCP from each address for the known single-
-   letter names in the root-servers.net zone.
+   The IPv4 and IPv6 addresses in this section were checked in March
+   2020 by testing for AXFR over TCP from each address for the known
+   single-letter names in the root-servers.net zone.
 
 B.1.  Example Configuration: BIND 9.12
 
@@ -503,7 +503,7 @@ B.1.  Example Configuration: BIND 9.12
 
 
 
-Kumari & Hoffman        Expires September 6, 2020               [Page 9]
+Kumari & Hoffman       Expires September 13, 2020               [Page 9]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -559,7 +559,7 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-Kumari & Hoffman        Expires September 6, 2020              [Page 10]
+Kumari & Hoffman       Expires September 13, 2020              [Page 10]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -615,7 +615,7 @@ B.3.  Example Configuration: BIND 9.14
 
 
 
-Kumari & Hoffman        Expires September 6, 2020              [Page 11]
+Kumari & Hoffman       Expires September 13, 2020              [Page 11]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -671,7 +671,7 @@ B.6.  Example Configuration: Microsoft Windows Server 2012
 
 
 
-Kumari & Hoffman        Expires September 6, 2020              [Page 12]
+Kumari & Hoffman       Expires September 13, 2020              [Page 12]
 
 Internet-Draft              Root Server Local                 March 2020
 
@@ -727,5 +727,5 @@ Authors' Addresses
 
 
 
-Kumari & Hoffman        Expires September 6, 2020              [Page 13]
+Kumari & Hoffman       Expires September 13, 2020              [Page 13]
 ```
