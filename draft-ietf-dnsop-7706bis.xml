@@ -53,7 +53,7 @@
       during a network attack.
       Some DNS recursive resolver
       operators want to prevent snooping by third parties of requests sent to DNS root servers.
-      Such resolvers can greatly decrease the round-trip
+      In both cases, resolvers can greatly decrease the round-trip
       time and prevent observation of requests by serving a copy of the full
       root zone on the same server, such as on a loopback address or in the resolver software. This
       document shows how to start and maintain such a copy of the root zone
@@ -242,7 +242,7 @@
       in the SOA. A system using a local authoritative server for the root zone
       MUST NOT serve stale data for the root zone. To mitigate the risk that stale
       data is served, the local root server MUST immediately switch to using
-      non-local root servers.</t>
+      non-local root servers when it detects that it would be serving state data.</t>
 
       <t>In a resolver that is using an internal service for the root zone,
       if the contents of the root zone cannot be refreshed before the
@@ -278,7 +278,7 @@
       benefits and costs of deploying DNSSEC <xref target="RFC4033"/>.</t>
 
       <t>As stated in <xref target="intro"/>, this design explicitly
-      allows the local copy of the root zone information to be
+      requires the local copy of the root zone information to be
       available only from resolvers on that host.
       This has the security property of limiting damage to clients of
       any local resolver that might try to rely on an altered copy of the

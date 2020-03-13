@@ -21,13 +21,13 @@ Abstract
    difficulty getting responses from the root servers, such as during a
    network attack.  Some DNS recursive resolver operators want to
    prevent snooping by third parties of requests sent to DNS root
-   servers.  Such resolvers can greatly decrease the round-trip time and
-   prevent observation of requests by serving a copy of the full root
-   zone on the same server, such as on a loopback address or in the
-   resolver software.  This document shows how to start and maintain
-   such a copy of the root zone that does not cause problems for other
-   users of the DNS, at the cost of adding some operational fragility
-   for the operator.
+   servers.  In both cases, resolvers can greatly decrease the round-
+   trip time and prevent observation of requests by serving a copy of
+   the full root zone on the same server, such as on a loopback address
+   or in the resolver software.  This document shows how to start and
+   maintain such a copy of the root zone that does not cause problems
+   for other users of the DNS, at the cost of adding some operational
+   fragility for the operator.
 
    This document obsoletes RFC 7706.
 
@@ -299,7 +299,8 @@ Internet-Draft              Root Server Local                 March 2020
    expire time in the SOA.  A system using a local authoritative server
    for the root zone MUST NOT serve stale data for the root zone.  To
    mitigate the risk that stale data is served, the local root server
-   MUST immediately switch to using non-local root servers.
+   MUST immediately switch to using non-local root servers when it
+   detects that it would be serving state data.
 
    In a resolver that is using an internal service for the root zone, if
    the contents of the root zone cannot be refreshed before the expire
@@ -334,7 +335,6 @@ Internet-Draft              Root Server Local                 March 2020
 
 
 
-
 Kumari & Hoffman       Expires September 13, 2020               [Page 6]
 
 Internet-Draft              Root Server Local                 March 2020
@@ -343,9 +343,9 @@ Internet-Draft              Root Server Local                 March 2020
    described in this document should be familiar with the operational
    benefits and costs of deploying DNSSEC [RFC4033].
 
-   As stated in Section 1, this design explicitly allows the local copy
-   of the root zone information to be available only from resolvers on
-   that host.  This has the security property of limiting damage to
+   As stated in Section 1, this design explicitly requires the local
+   copy of the root zone information to be available only from resolvers
+   on that host.  This has the security property of limiting damage to
    clients of any local resolver that might try to rely on an altered
    copy of the root.
 
